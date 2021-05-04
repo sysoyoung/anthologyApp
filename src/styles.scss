@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@import "assets/styles/colors.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    &:hover{
+        color: $lightGreen;
+    }
+}
+
+input, button{
+    outline:none;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+li{
+    list-style: none;
+}

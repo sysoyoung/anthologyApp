@@ -1,0 +1,6 @@
+<div class="block-for-positioning">
+    <div class="search_block">
+        <input type="text" placeholder="Пошук" (keydown.Enter)="search()" [formControl]="searchControl">
+        <button (click)="search()"><fa-icon [icon]="searchIcon"></fa-icon></button>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="page_wrapper">
+    <aside *ngIf="article">
+        <p>Related articles</p>
+        <ul *ngIf="article && article.relatedArticles">
+            <li *ngFor="let relatedArticle of article.relatedArticles">
+                <a [routerLink]="'/page/' + getArticleTitleWithoutSpaces(relatedArticle.title)">
+                    {{relatedArticle?.title}}
+                </a>
+            </li>
+        </ul>
+    </aside>
+        
+    <section *ngIf="article">
+
+        <div class="header_block">
+            <h1>{{article?.title}}</h1>
+            <div class="under-title_block">
+                <div class="author_wrapper">{{article?.author}}</div>
+                <div class="data_wrapper">{{getArticleDate()}}</div>
+            </div>
+        </div>
+        <div class="text_block">
+            <app-text [text]="text"></app-text>
+        </div>
+        <div class="footer_block">
+            <div class="references_block">
+                <ol *ngIf="article && article.references">
+                    <li *ngFor="let reference of article.references">
+                        <div *ngIf="reference?.link === ''">{{reference.title}}</div>
+                        <a *ngIf="reference?.link !== ''" [href]="reference.link">{{reference?.title}}</a>
+                    </li>
+                </ol>
+            </div>
+            <div class="tags_block" *ngIf="article && article.tags">
+                <a *ngFor="let tag of article.tags" (click)="searchByTag(tag)">{{tag}}</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+

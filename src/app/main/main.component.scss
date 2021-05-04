@@ -1,0 +1,51 @@
+@import "../../assets/styles/colors";
+
+.block-for-positioning{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+}
+
+.search_block{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+
+    input, button{
+        height: 45px;
+        font-size: 25px;
+        border-radius: 23px;
+        color: white;
+        border: none;
+    }
+
+    input{
+        width: 450px;
+        background-color: $blue;
+        padding-left: 20px;
+        padding-right: 50px;
+        &::placeholder{
+            color: white;
+        }
+        &:focus{
+            background-color: $darckBlue;
+        }
+    }
+
+    button{
+        width: 60px;
+        background-color: $lightBlue;
+        margin-left: -35px;
+        &:active{
+            background-color: $lightBlueActive;
+        }
+    }
+}
+
+
+

@@ -1,0 +1,43 @@
+@import "../../../assets/styles/colors.scss";
+
+.list_wrapper{
+    width: 80%;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.search_block{
+    margin-top: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid $darckBlue;
+
+    input, button{
+        height: 35px;
+        border-radius: 20px;
+        border: none;
+        font-size: 16px;
+        color: white;
+    }
+    
+    input{
+        width: 250px;
+        padding-left: 10px;
+        padding-right: 50px;
+        background-color: $blue;
+        &::placeholder{
+            color: white;
+        }
+        &:focus{
+            background-color: $darckBlue;
+        }
+    }
+    
+    button{
+        width: 40px;
+        margin-left: -40px;
+        background-color: $lightBlue;
+        &:active{
+            background-color: $lightBlueActive;
+        }
+    }
+}

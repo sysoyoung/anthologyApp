@@ -1,0 +1,113 @@
+@import '../../assets/styles/colors.scss';
+
+*{
+    box-sizing: border-box;
+}
+
+.transparent{
+    position: relative;
+    max-width: 500px;
+    padding: 60px 50px;
+    margin: 60px auto 0;
+    background-image: url('/assets/imgs/schema.jpg');
+    background-size: cover;
+
+
+    &::before{
+
+      
+
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to right bottom, #087f23, #9499f380);
+
+        -webkit-box-shadow: 5px 5px 35px -4px rgba(0, 0, 0, 0.6) inset;
+        -moz-box-shadow: 5px 5px 35px -4px rgba(0, 0, 0, 0.6) inset;
+        box-shadow: 5px 5px 35px -4px rgba(0, 0, 0, 0.6) inset;
+    }
+}
+
+.form-inner{
+    position: relative;
+
+    h3{
+        position: relative;
+        margin-top: -10px;
+        margin-bottom: 20px;
+        color: $lightBlue;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
+        font-size: 26px;
+        text-transform: uppercase;
+
+        &::after{
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            height: 2px;
+            width: 60px;
+            background: $darckBlue;
+        }
+    }
+
+    label{
+        display: block;
+        padding-left: 15px;
+        font-family: 'Roboto', sans-serif;
+        text-transform: uppercase;
+        color: white;
+        font-size: 14px;
+    }
+
+    input{
+        display: block;
+        width: 100%;
+        padding: 0 15px; 
+        margin: 10px 0 15px;
+        border-width: 0;
+        line-height: 40px;
+        border-radius: 20px;
+        background: #ffffff33;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        border: 1px solid transparent;
+    }
+
+    input[type="submit"]{
+        background: $lightBlue;
+
+        &:hover{
+            cursor: pointer;
+        }
+
+        &:active{
+            background-color: #939aff;
+        }
+    }
+
+    .alert{
+        position: absolute;
+        right: 0;
+        margin-right: 15px;
+        margin-top: -16px;
+        padding: 2px;
+        color: #810000;
+        font-size: 16px;
+        border-radius: 3px;
+    }
+
+    .alert-border{
+        border-color: red;
+    }
+}
+
+
+
+
+
+

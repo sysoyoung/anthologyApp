@@ -1,0 +1,78 @@
+@import "../../../../assets/styles/colors.scss";
+
+.page_wrapper{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+aside{
+    width: 15%;
+    padding-top: 38px;
+    p{
+        margin: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid $darckBlue;
+    }
+    ul{
+        margin: 10px;
+        li{
+            margin-top: 3px;
+        }    
+    }   
+}
+
+section{
+    width: 83%;
+    .header_block{
+        border-bottom: 1px solid $darckBlue;
+        padding: 5px 1px;
+        h1{
+            text-align: center;
+            font-size: 30px;
+        }
+        .under-title_block{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    }
+    .text_block{
+        margin-top: 20px;
+        padding: 5px 5px 20px 5px;
+        font-size: 18px;
+        line-height: 1.3em;
+        border-bottom: 1px solid $darckBlue;
+    }
+    .footer_block{
+        margin-top: 10px;
+        .references_block{
+            padding-bottom: 10px;
+            border-bottom: 1px solid $darckBlue;
+            ol{
+                margin-left: 20px;
+                li{
+                    list-style: decimal;
+                    a {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+        .tags_block{
+            margin-top: 5px;
+            a{
+                margin-left: 3px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.red{
+    color: red;
+}

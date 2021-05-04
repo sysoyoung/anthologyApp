@@ -1,18 +1,46 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MainComponent } from './main/main.component';
+import { ListComponent } from './main/list/list.component';
+import { PageComponent } from './main/list/page/page.component';
+import { ListItemComponent } from './main/list/list-item/list-item.component';
+import { SearchService } from './search.service';
+import { PageService } from './main/list/page/page.service';
+import { TextComponent } from './main/list/page/text/text.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { AuthComponent } from './auth/auth.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { RegistrationService } from './registration/registration.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    MainComponent,
+    ListComponent,
+    PageComponent,
+    ListItemComponent,
+    TextComponent,
+    RegistrationComponent,
+    AuthComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [ SearchService, PageService, RegistrationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

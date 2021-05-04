@@ -1,0 +1,10 @@
+<div class="list_wrapper">
+    <div class="search_block">
+        <input type="text" placeholder="Пошук" [formControl]="searchControl" (keydown.Enter)="search()">
+        <button (click)="search()"><fa-icon [icon]="searchIcon"></fa-icon></button>
+    </div>
+    <div class="list_block">
+        {{nothing}}
+        <app-list-item *ngFor="let article of arrayOfArticles" [article]="article"></app-list-item>
+    </div>
+</div>

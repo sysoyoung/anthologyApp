@@ -1,0 +1,39 @@
+@import "../../../../assets/styles/colors.scss";
+
+.list-item{
+    width: 100%;
+    height: 70px;
+    background-color: $lightGreen;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    color: $darckBlue;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    &:hover{
+        cursor: pointer;
+        border-color: $green;
+    }
+}
+
+.list-item__title{
+    margin: 17px;
+    font-size: 30px;
+}
+
+.list-item__right-block{
+    margin: 15px;
+    text-align: right;
+
+    .list-item__author{
+        font-size: 20px;
+    }
+    
+    .list-item__date{
+        margin-top: 3px;
+        font-size: 12px;
+    }
+}
+
+
+

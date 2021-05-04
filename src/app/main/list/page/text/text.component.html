@@ -1,0 +1,17 @@
+<ul class="content" *ngIf="text.length > 1">
+    <div class="content-title">Зміст</div>
+    <li *ngFor="let par of text; let i = index">
+        <span *ngIf="par.length === 2">
+            {{i}}
+            <a (click)="scrollToTitle(par[0]+i)">{{par[0]}}</a>        
+        </span>
+    </li>
+</ul>
+<div *ngFor="let par of text; let i = index">
+    <h2 *ngIf="par.length === 2" [id]="par[0]+i">{{par[0]}}</h2>
+    <div *ngFor="let sub of par[par.length-1]">
+        <p>{{sub}}</p>
+    </div>
+</div>
+
+<!-- par[par.length-1] -->

@@ -1,0 +1,18 @@
+    <form class="transparent" (keydown.Enter)="userRegisterClick()">
+        <div class="form-inner">
+            <h3>реєстрація</h3>
+            <label for="name">Ім'я</label>
+            <div class="alert" *ngIf="nameErr">{{nameErr}}</div>
+            <input type="text" name="name" id="name" [formControl]="nameControl">
+            <label for="lastname">Прізвище</label>
+            <div class="alert" *ngIf="lastNameErr">{{lastNameErr}}</div>
+            <input type="text" name="lastname" id="lastname" [formControl]="lastNameControl">
+            <label for="email">Пошта</label>
+            <div class="alert" *ngIf="emailErr">{{emailErr}}</div>
+            <input type="email" name="email" id="email" [formControl]="emailControl">
+            <label for="password">Пароль</label>
+            <div class="alert" *ngIf="passErr">{{passErr}}</div>
+            <input type="password" name="password" id="password" autocomplete="on" [formControl]="passwordControl">
+            <input type="submit" value="Зареєструватися" (click)="userRegisterClick()">
+        </div>
+    </form>

@@ -1,0 +1,62 @@
+@import "../../assets/styles/colors";
+
+header{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100px;
+    background-color: $lightGreen;
+}
+
+.logo_block{
+    margin-left: 40px;
+    margin-top: 20px;
+    img{
+        height: 60px;
+    }
+}
+
+.rigth-side_block{
+    display: flex;
+    margin-right: 40px;
+    margin-top: 20px;
+
+    input, button{
+        height: 30px;
+        margin-top: 15px;
+        border-radius: 20px;
+        border: none;
+        color: white;
+    }
+
+    input{
+        width: 250px;
+        padding-left: 10px;
+        padding-right: 50px;
+        background-color: $blue;
+        &::placeholder{
+            color: white;
+        }
+        &:focus{
+            background-color: $darckBlue;
+        }
+    }
+    
+    button{
+        width: 40px;
+
+        margin-left: -40px;
+        background-color: $lightBlue;
+        &:active{
+            background-color: $lightBlueActive;
+        }
+    }
+    img{
+       border-radius: 50%;     
+       height: 60px;
+       margin-left: 20px;
+    }    
+    a{
+        cursor: pointer;
+    }
+}
