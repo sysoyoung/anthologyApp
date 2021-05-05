@@ -24,17 +24,15 @@ router.post('/auth', (req, res) => {
     const email = req.body.email;
 
     const user = User.getUserByEmail(email);
-    if(user == 'User not found'){
-        return res.json({success: false, message: user});
+    if(!user){
+        return res.json({success: false, message: 'email not found'});
     }
 
     User.comparePass(password, user.password, (err, isMatch) => {
         if(err) throw err;
 
         if(isMatch) {
-            const token = jwt.sign(user, config.secret, {
-                expiresIn: 60*60*24,
-            });
+            const token = jwt.sign(user, config.secret, { expiresIn: "10h" });
 
             res.json({
                 success: true,
@@ -46,7 +44,7 @@ router.post('/auth', (req, res) => {
                 }
             })
         } else {
-            return res.json({success: false, message: "Wrong password"});
+            return res.json({success: false, message: "wrong password"});
         }
     });
 });
@@ -63,7 +61,7 @@ router.get('/getusers', (req, res) => {
 
 router.get('/setuser', (req, res) => {
     
-    let newUser = new User( 'a', 'a', 'a');
+    let newUser = new User( 'qwe qwe', 'qwe@qwe.qwe', 'qweqwe');
     let unswer = User.addUser(newUser);
 
     res.send(unswer);

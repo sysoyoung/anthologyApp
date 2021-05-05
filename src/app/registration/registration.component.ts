@@ -30,13 +30,12 @@ export class RegistrationComponent implements OnInit {
     this.nameControl     = new FormControl('', [requiredValidator]);
     this.lastNameControl = new FormControl('', [requiredValidator]);
     this.emailControl    = new FormControl('', [emailValidator, requiredValidator]);
-    this.passwordControl = new FormControl('', [
-      passwordValidator,
-      minLengthValidator(4, 'password'),
-      requiredValidator]);
+    this.passwordControl = new FormControl('', [passwordValidator,
+                                                minLengthValidator(4, 'password'),
+                                                requiredValidator]);
   }
 
-  userRegisterClick(): any{
+  userRegisterClick(): boolean{
 
     this.nameErr     = !this.nameControl.valid     ? this.nameControl.errors?.message     : '';
     this.lastNameErr = !this.lastNameControl.valid ? this.lastNameControl.errors?.message : '';
@@ -58,8 +57,6 @@ export class RegistrationComponent implements OnInit {
         this.emailErr = res.message;
       });
     }
-
-
     return false;
   }
 }

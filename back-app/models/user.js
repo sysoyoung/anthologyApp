@@ -37,7 +37,13 @@ class User{
     }
 
     static getUserByEmail(mail){
-        return User.users.find(user => user.email === mail) || 'User not found';
+        const tempUser = User.users.find(user => user.email === mail);
+        return tempUser ? {
+            id : tempUser.id,
+            name: tempUser.name,
+            email: tempUser.email,
+            password: tempUser.password
+        } : false;
     }
 
     static comparePass(passFromUser, userPass, callback){

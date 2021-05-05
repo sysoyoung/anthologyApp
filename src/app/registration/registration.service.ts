@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -9,7 +10,7 @@ export class RegistrationService {
 
   constructor( private http: HttpClient) { }
 
-  registerUser(user: object): any{
+  registerUser(user: object): Observable<object>{
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/account/reg', user, { headers });

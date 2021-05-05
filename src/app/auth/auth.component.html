@@ -1,1 +1,12 @@
-<p>auth works!</p>
+<form class="transparent" (keydown.Enter)="userAuthClick()">
+    <div class="form-inner">
+        <h3>логін</h3>
+        <label for="email">Пошта</label>
+        <div class="alert" *ngIf="emailErr">{{emailErr}}</div>
+        <input type="email" name="email" id="email" [formControl]="emailControl">
+        <label for="password">Пароль</label>
+        <div class="alert" *ngIf="passErr">{{passErr}}</div>
+        <input type="password" name="password" id="password" autocomplete="on" [formControl]="passwordControl">
+        <input type="submit" value="Увійти" (click)="userAuthClick()">
+    </div>
+</form>
