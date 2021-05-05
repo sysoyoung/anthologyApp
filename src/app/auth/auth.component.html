@@ -8,5 +8,8 @@
         <div class="alert" *ngIf="passErr">{{passErr}}</div>
         <input type="password" name="password" id="password" autocomplete="on" [formControl]="passwordControl">
         <input type="submit" value="Увійти" (click)="userAuthClick()">
+        <div class="reg-link_wrapper">
+            <a [routerLink]="'/registration'">registration</a>
+        </div>
     </div>
 </form>

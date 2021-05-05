@@ -3,3 +3,21 @@
 .transparent{
     margin-top: 110px;
 }
+
+.reg-link_wrapper{
+    margin-top: 30px;
+    margin-bottom: -10px;
+    
+    text-align: center;
+    
+    
+    a{
+        font-size: 16px;
+        text-decoration: underline;
+        color: white;
+        &:hover{
+            color: $lightGreen;
+        }
+    }
+}
+

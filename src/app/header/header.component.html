@@ -6,21 +6,18 @@
     </div>
     <div class="rigth-side_block">
         <div class="search" *ngIf="showSearch">
-            <!--  -->
-            <!-- #searchElement -->
-            <!-- [(ngModel)]="searchValue" -->
             <input type="text" placeholder="Пошук" (keydown.Enter)="search()" [formControl]="searchControl">
             <button (click)="search()"><fa-icon [icon]="searchIcon"></fa-icon></button>
         </div>
 
-        <div class="user-photo_block">
+        <div class="user-photo_block" *ngIf="userService.isLoggedIn()">
             <a [routerLink]="['/dashboard']">
                 <img src="/assets/imgs/man.png" alt="User photo">
             </a>
         </div>
 
-        <div class="login_block" [routerLink]="['/authentication']">
-            <a >Log in</a> 
+        <div class="login_block" [routerLink]="['/authentication']" *ngIf="!userService.isLoggedIn() && isLoginNow()">
+            <a>Log in</a> 
         </div>
     </div>
 </header>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Event, NavigationStart} from '@angular/router';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { UserService } from '../dashboard/user.service';
 import { SearchService } from '../search.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private searchService: SearchService
+    private searchService: SearchService,
+    public userService: UserService
   ) {
     this.router.events.subscribe((event: Event) => {
       if ( event instanceof NavigationStart){
@@ -36,7 +38,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
+    this.searchControl = new FormControl('', [Validators.required]);
   }
 
   search(): void{
@@ -47,4 +49,10 @@ export class HeaderComponent implements OnInit {
     return;
   }
 
+  isLoginNow(): boolean{
+    if (this.router.url === '/authentication'){
+      return false;
+    }
+    return true;
+  }
 }

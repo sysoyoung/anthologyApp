@@ -18,6 +18,8 @@ import { RegistrationComponent } from './registration/registration.component';
 import { AuthComponent } from './auth/auth.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistrationService } from './registration/registration.service';
+import { IsLoggedIn } from './isLoggedIn.guard';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -39,8 +41,15 @@ import { RegistrationService } from './registration/registration.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('token'),
+        allowedDomains: ['localhost:3000'],
+        disallowedRoutes: ['http://localhost:3000/account/auth', 'http://localhost:3000/account/reg'],
+      }
+    }),
   ],
-  providers: [ SearchService, PageService, RegistrationService],
+  providers: [ SearchService, PageService, RegistrationService, IsLoggedIn],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -51,7 +51,7 @@ export class RegistrationComponent implements OnInit {
         password: this.passwordControl.value
       }).subscribe( (res: any) => {
         if (res.success){
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/authentication']);
           return;
         }
         this.emailErr = res.message;

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { IsLoggedIn } from './isLoggedIn.guard';
 
 import { ListComponent } from './main/list/list.component';
 import { PageComponent } from './main/list/page/page.component';
@@ -14,7 +15,7 @@ const routes: Routes = [
   { path: 'page/:pageTitle', component: PageComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'authentication', component: AuthComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [IsLoggedIn] },
 ];
 
 @NgModule({
