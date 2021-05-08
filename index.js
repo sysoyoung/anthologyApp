@@ -21,17 +21,21 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.send(JSON.stringify(tempDbListOfPAges.tempArrayOfArticles));
 })
 
-app.get('/page', (req, res) => {
+app.get('/search', (req, res) => {
+    let myQuery = req.query.query;
+    // let b = req.query.type;
+    let myResponse = tempDbListOfPAges.tempArrayOfArticles.filter( a => a.title.toLowerCase().includes(myQuery));
+
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.send(JSON.stringify(tempDbPages.page[0]));
+    res.send(JSON.stringify(myResponse));
 })
 
 app.get('/page/:id', (req, res) => {
-  res.send('working ' + url.href);
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    tempDbPages.page[0].title = req.params.id;
+    res.send(JSON.stringify(tempDbPages.page[0]));
 })
 
 app.use('/account', account);
