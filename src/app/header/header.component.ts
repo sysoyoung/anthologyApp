@@ -50,9 +50,6 @@ export class HeaderComponent implements OnInit {
   }
 
   isLoginNow(): boolean{
-    if (this.router.url === '/authentication'){
-      return false;
-    }
-    return true;
+    return this.router.url !== '/authentication';
   }
 }

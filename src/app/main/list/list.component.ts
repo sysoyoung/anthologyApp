@@ -38,13 +38,11 @@ export class ListComponent implements OnInit {
 
     this.searchService.getAllArticles().subscribe((articles: Array<object> | any) => {
       this.arrayOfArticles = articles;
-      if (articles.length === 0){
-        this.nothing = 'Нічого не знайдено!';
-      }
+      this.nothing = articles.length ? '' : 'Нічого не знайдено!';
     });
 
     setTimeout( () => {
-      if (this.arrayOfArticles.length === 0){
+      if (this.arrayOfArticles.length === 0 && this.nothing === ''){
         this.nothing = 'Пока что не придумал что здесь написать';
       }
     }, 3000);

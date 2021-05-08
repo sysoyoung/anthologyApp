@@ -46,6 +46,6 @@ export class PageService {
   }
 
   getArticle(): any{
-      return this._http.get('http://localhost:3000/page');
+      return this._http.get('http://localhost:3000/page/' + this.articleId);
   }
 }

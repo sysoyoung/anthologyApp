@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router, Event, NavigationStart } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,34 +8,33 @@ import { Observable } from 'rxjs';
 })
 export class SearchService {
 
-  private _searchValue = '';
-  private _arrayOfArticles: Array<object> = [];
+  private searchValue = '';
+  private arrayOfArticles: Array<object> = [];
 
   constructor(
     private router: Router,
-    // tslint:disable-next-line: variable-name
-    private _http: HttpClient
+    private http: HttpClient
     ) { }
 
   public getSearchValue(): string {
-    return this._searchValue;
+    return this.searchValue;
   }
 
   public setSearchValue(value: string): void {
-    this._searchValue = value;
+    this.searchValue = value;
   }
 
-  // Observable<object>
   public getAllArticles(): Observable<object>{
-    if (this._arrayOfArticles.length === 0){
+    if (this.arrayOfArticles.length === 0){
       this.setSearchValue(this.router.url.split('?')[1]?.split('&')[0]?.split('=')[1]);
     }
 
-    return this._http.get('http://localhost:3000/');
-    // return this._arrayOfArticles;
+    const myParams = new HttpParams().set('query', this.searchValue);
+
+    return this.http.get('http://localhost:3000/search', {params: myParams});
   }
 
   public navigateToSearch(): void{
-    this.router.navigate(['/search'], { queryParams: {query: this._searchValue}});
+    this.router.navigate(['/search'], { queryParams: {query: this.searchValue}});
   }
 }
