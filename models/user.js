@@ -46,6 +46,15 @@ class User{
         } : false;
     }
 
+    static getUserById(id){
+        const tempUser = User.users.find(user => user.id === id);
+        return tempUser ? {
+            id,
+            name: tempUser.name,
+            email: tempUser.email,
+        } : false;
+    }
+
     static comparePass(passFromUser, userPass, callback){
         bcrypt.compare(passFromUser, userPass, (err, isMatch) => {
             if(err) throw err;

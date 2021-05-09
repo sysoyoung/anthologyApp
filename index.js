@@ -20,9 +20,6 @@ require('./config/passport')(passport);
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-})
-
 app.get('/search', (req, res) => {
     let myQuery = req.query.query;
     // let b = req.query.type;
@@ -34,12 +31,12 @@ app.get('/search', (req, res) => {
 
 app.get('/page/:id', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    tempDbPages.page[0].title = req.params.id;
+    tempDbPages.page[0].title = req.params.id.split('_').join(' ');
     res.send(JSON.stringify(tempDbPages.page[0]));
 })
 
 app.use('/account', account);
 
 app.listen(port, () => {
-    console.log(`server working(${port})`);
+    console.log(`server working. port: ${port}`);
 });

@@ -6,6 +6,7 @@ const config = require('../config/db');
 
 const user = require('../models/user');
 const User = user.User;
+const myArticles = require('../config/tempDpListOfPages');
 
 router.post('/reg', (req, res) => {
     
@@ -16,7 +17,7 @@ router.post('/reg', (req, res) => {
     );
     const unswer = User.addUser(newUser);
 
-    res.send({ success: (unswer == 'User added'), message: unswer});
+    res.json({ success: (unswer == 'User added'), message: unswer});
 });
 
 router.post('/auth', (req, res) => {
@@ -32,7 +33,7 @@ router.post('/auth', (req, res) => {
         if(err) throw err;
 
         if(isMatch) {
-            const token = jwt.sign(user, config.secret, { expiresIn: "24h" });
+            const token = jwt.sign(user, config.secret, { expiresIn: "1d" });
 
             res.json({
                 success: true,
@@ -49,8 +50,19 @@ router.post('/auth', (req, res) => {
     });
 });
 
-router.get('/dashboard', passport.authenticate('jwt', {session: false}), (req, res) => {
-    res.send('user cab');
+router.get('/dashboard/:id', (req, res) => {
+    let userId = req.params.id;
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+    const user = User.getUserById(userId);
+    if(!user){
+        res.json({ status: false, message: 'user not found'});
+        return;
+    }
+    user.status = true;
+    user.articles = myArticles.tempArrayOfArticles;
+    
+    res.json(user);
 });
 
 // TESTINg ROUTS--------------
