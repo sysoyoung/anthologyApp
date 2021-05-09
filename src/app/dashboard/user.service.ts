@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 
@@ -24,5 +25,9 @@ export class UserService {
 
   isLoggedIn(): boolean{
     return !this.jwtHelper.isTokenExpired();
+  }
+
+  getUserInfo(): Observable<object>{
+    return this.http.get('http://localhost:3000/account/dashboard/' + this.authService.getUerId());
   }
 }

@@ -1,0 +1,75 @@
+@import "../../../assets/styles/colors.scss";
+
+.list-item{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 70px;
+    margin-top: 20px;
+    margin-left: 10px;
+    background-color: $lightGreen;
+    color: $darckBlue;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    &:hover{
+        cursor: pointer;
+        border-color: $green;
+    }
+}
+
+.list-item__title{
+    margin: 17px;
+    font-size: 30px;
+}
+
+.list-item__right-block{
+    display: flex;
+    margin: 15px;
+    text-align: right;
+
+    .right_block-info{
+        margin-right: 18px;
+
+        .list-item__author{
+            font-size: 20px;
+        }
+        
+        .list-item__date{
+            margin-top: 3px;
+            font-size: 12px;
+        }
+    }
+
+    button{
+        height: 40px;
+        margin-left: 10px;
+        width: 90px;        
+        border: 1px solid transparent;
+        font-size: 16px;
+        transition: .2s;
+
+        &:hover{
+            border-color: white;
+            border-radius: 10px;
+        }
+    }
+    
+    .delete{
+        background-color: #ff8965 ;
+    }
+
+    .post{
+        background-color: #4989ff;
+    }
+
+    .fix{
+        background-color: #cec54d;
+    }
+
+    .hide{
+        background-color: #9b9b9b;
+    }
+}
+
+
+

@@ -1,0 +1,14 @@
+
+<div class="list-item" [routerLink]="'/page/' + article.id">
+    <div class="list-item__title">{{article.title}}</div>
+    <div class="list-item__right-block">
+        <div class="right_block-info">
+            <div class="list-item__author">{{article.author}}</div>
+            <div class="list-item__date">{{article.date}}</div>    
+        </div>
+        <button class="delete">Видалити</button>
+        <button class="fix">Виправити</button>        
+        <button class="hide" *ngIf="article.status === 'posted'">Сховати</button>        
+        <button class="post" *ngIf="article.status === 'hidden'">Запостити</button>
+    </div>
+</div>

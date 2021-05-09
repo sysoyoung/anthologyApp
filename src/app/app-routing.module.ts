@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'page/:pageTitle', component: PageComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'authentication', component: AuthComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [IsLoggedIn] },
+  { path: 'dashboard/:id', component: DashboardComponent, canActivate: [IsLoggedIn] },
 ];
 
 @NgModule({

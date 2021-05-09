@@ -26,6 +26,10 @@ export class AuthService {
     this.user = user;
   }
 
+  getUerId(): string{
+    return JSON.parse(localStorage.getItem('user') || '')?.id  || '';
+  }
+
   logout(): void{
     this.token = null;
     this.user = null;

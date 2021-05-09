@@ -8,18 +8,25 @@ import { UserService } from './user.service';
 })
 export class DashboardComponent implements OnInit {
 
+  user!: any;
+
   constructor(
     private userService: UserService
   ) { }
 
   ngOnInit(): void {
+    this.userService.getUserInfo().subscribe( (data: any) => {
+      if (data.status){
+        this.user = data;
+        return;
+      }
+      this.userLogout();
+    });
   }
+
+  
 
   userLogout(): void{
     this.userService.logout();
-  }
-
-  check(): void{
-    this.userService.isLoggedIn();
   }
 }

@@ -25,8 +25,8 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     this.emailControl = new FormControl('', [emailValidator, requiredValidator]);
     this.passwordControl = new FormControl('', [passwordValidator,
-                                            minLengthValidator(4, 'password'),
-                                            requiredValidator]);
+                                                minLengthValidator(4, 'password'),
+                                                requiredValidator]);
 
   }
 
@@ -41,7 +41,7 @@ export class AuthComponent implements OnInit {
         password: this.passwordControl.value
       }).subscribe( (res: any) => {
         if (res.success){
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard/' + res.user.id]);
           this.authService.storeUser( res.token, res.user);
           return;
         }

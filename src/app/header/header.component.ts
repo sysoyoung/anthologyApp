@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, Event, NavigationStart} from '@angular/router';
+import { Router, Event, NavigationStart} from '@angular/router';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../dashboard/user.service';
 import { SearchService } from '../search.service';
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private searchService: SearchService,
-    public userService: UserService
+    public userService: UserService,
   ) {
     this.router.events.subscribe((event: Event) => {
       if ( event instanceof NavigationStart){
@@ -51,5 +51,9 @@ export class HeaderComponent implements OnInit {
 
   isLoginNow(): boolean{
     return this.router.url !== '/authentication';
+  }
+
+  getUserId(): string{
+    return JSON.parse(localStorage.getItem('user') || '')?.id || '';
   }
 }

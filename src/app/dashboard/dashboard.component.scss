@@ -1,0 +1,53 @@
+@import '../../assets/styles/colors.scss';
+
+.page_wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+
+
+    aside{
+        width: 150px;
+        margin-right: 20px;
+        margin-top: 40px;
+        padding: 10px;
+
+        li{
+            font-size: 17px;
+            a{
+                display: block;
+                padding: 4px 10px;
+                color: $darckBlue;
+                border-radius: 2px;
+                cursor: pointer;
+                &:hover{
+                    background-color: $lightGreen;                        
+                }
+            }
+        }
+    }
+
+    .main_block{
+        width: 80%;
+
+        .header_block{
+            width: 100%;
+            margin-top: 50px;
+            padding: 10px;
+            text-align: right;
+            border: 1px solid $darckBlue;
+            -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+            -moz-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+            box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+
+            .name_block{
+                font-size: 30px;
+            }
+    
+            .email_block{
+                font-size: 16px;
+            }
+        }
+    }
+}

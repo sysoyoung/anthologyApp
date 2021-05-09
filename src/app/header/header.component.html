@@ -11,7 +11,7 @@
         </div>
 
         <div class="user-photo_block" *ngIf="userService.isLoggedIn()">
-            <a [routerLink]="['/dashboard']">
+            <a [routerLink]="['/dashboard/' + getUserId()]">
                 <img src="/assets/imgs/man.png" alt="User photo">
             </a>
         </div>

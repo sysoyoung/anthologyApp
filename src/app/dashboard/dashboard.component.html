@@ -1,6 +1,21 @@
-<p>dashboard works!</p>
-<button (click)="userLogout()">logout</button>
-<br>
-<br>
-<br>
-<button (click)="check()">Check</button>
+<div class="page_wrapper" *ngIf="user">
+    <aside>
+        <ul>
+            <li><a href="#">Сворити статью</a></li>
+            <li><a href="#">Змінити пошту</a></li>
+            <li><a href="#">Змінити пароль</a></li>
+            <li><a (click)="userLogout()">Вийти</a></li>
+        </ul>
+    </aside>
+    <div class="main_block">
+
+        <div class="header_block">
+            <div class="name_block">{{user.name}}</div>
+            <div class="email_block">{{user.email}}</div>
+        </div>
+
+        <div class="article-list">
+            <app-my-article *ngFor="let item of user?.articles" [article]="item"></app-my-article>
+        </div>
+    </div>
+</div>

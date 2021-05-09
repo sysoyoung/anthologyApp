@@ -20,6 +20,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistrationService } from './registration/registration.service';
 import { IsLoggedIn } from './isLoggedIn.guard';
 import { JwtModule } from '@auth0/angular-jwt';
+import { MyArticleComponent } from './dashboard/my-article/my-article.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { JwtModule } from '@auth0/angular-jwt';
     TextComponent,
     RegistrationComponent,
     AuthComponent,
-    DashboardComponent
+    DashboardComponent,
+    MyArticleComponent
   ],
   imports: [
     BrowserModule,
