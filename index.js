@@ -5,6 +5,7 @@ const passport = require('passport');
 const path = require('path');
 
 const account = require('./routes/account');
+const article = require('./routes/article');
 
 const tempDbPages = require('./config/tempDbPages');
 const tempDbListOfPAges = require('./config/tempDpListOfPages');
@@ -36,6 +37,7 @@ app.get('/page/:id', (req, res) => {
 })
 
 app.use('/account', account);
+app.use('/article', article);
 
 app.listen(port, () => {
     console.log(`server working. port: ${port}`);
