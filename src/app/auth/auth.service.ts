@@ -26,7 +26,7 @@ export class AuthService {
     this.user = user;
   }
 
-  getUerId(): string{
+  getUserIdfromStorage(): string{
     return JSON.parse(localStorage.getItem('user') || '')?.id  || '';
   }
 

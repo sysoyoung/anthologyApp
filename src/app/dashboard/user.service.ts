@@ -1,11 +1,25 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
+export interface User{
+  status: boolean;
+  id: string;
+  name: string;
+  email: string;
+  articles: [Article];
+}
 
+export interface Article{
+  id: string;
+  title: string;
+  author: string;
+  date: number;
+  status: string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +33,7 @@ export class UserService {
   ) { }
 
   logout(): void{
-    this.router.navigate(['/']);
+    this.router.navigate(['/authentication']);
     this.authService.logout();
   }
 
@@ -27,7 +41,18 @@ export class UserService {
     return !this.jwtHelper.isTokenExpired();
   }
 
-  getUserInfo(): Observable<object>{
-    return this.http.get('http://localhost:3000/account/dashboard/' + this.authService.getUerId());
+  getUserInfo(): Observable<User>{
+    const temp = this.router.url.split('/');
+    return this.http.get('http://localhost:3000/account/dashboard/' + temp[temp.length - 1]) as Observable<User>;
+  }
+
+  deleteArticle(id: string): void{
+    this.http.delete('http://localhost:3000/article/' + id).subscribe();
+  }
+
+  changeArticleStatus(id: string, status: string): void{
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    this.http.put('http://localhost:3000/article/' + id, {status}, {headers}).subscribe();
   }
 }

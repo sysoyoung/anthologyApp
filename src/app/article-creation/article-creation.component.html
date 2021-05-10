@@ -1,0 +1,14 @@
+
+<div class="page_wrapper">
+
+    <h1>Створення статті</h1>
+    
+    <form>
+        <li *ngFor="let group of additionListControl.controls;"  [formGroup]="group">
+            <input type="text" placeholder="Назва додатку" formControlName="title">
+            <input type="text" placeholder="Посилання на додаток" formControlName="link">
+        </li>
+    </form>
+
+    <button (click)="pushAdditionFormGroup()">Add</button>
+</div>

@@ -28,12 +28,10 @@ export interface ArticleInterface{
 export class PageService {
 
   private articleId = '';
-  private articleInfo: ArticleInterface | undefined;
 
   constructor(
     private router: Router,
-    // tslint:disable-next-line: variable-name
-    private _http: HttpClient
+    private http: HttpClient
     ) { }
 
   setArticleId(): void{
@@ -46,6 +44,6 @@ export class PageService {
   }
 
   getArticle(): any{
-      return this._http.get('http://localhost:3000/page/' + this.articleId);
+      return this.http.get('http://localhost:3000/page/' + this.articleId);
   }
 }

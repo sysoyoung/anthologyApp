@@ -6,9 +6,9 @@
             <div class="list-item__author">{{article.author}}</div>
             <div class="list-item__date">{{article.date}}</div>    
         </div>
-        <button class="delete">Видалити</button>
-        <button class="fix">Виправити</button>        
-        <button class="hide" *ngIf="article.status === 'posted'">Сховати</button>        
-        <button class="post" *ngIf="article.status === 'hidden'">Запостити</button>
+        <button class="delete" (click)="deleteArticle($event)">Видалити</button>
+        <button class="fix">Змінити</button>        
+        <button class="hide" *ngIf="article.status === 'posted'" (click)="hideArticle($event)">Сховати</button>        
+        <button class="post" *ngIf="article.status === 'hidden'" (click)="postArticle($event)">Запостити</button>
     </div>
 </div>

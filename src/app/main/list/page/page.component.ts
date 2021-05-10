@@ -23,7 +23,10 @@ export class PageComponent implements OnInit {
     // tslint:disable-next-line: deprecation
     this.router.events.subscribe((event: Event) => {
       if ( event instanceof NavigationEnd){
-        this.changePage();
+        const page = router.url.split('/');
+        if (page[page.length - 2] === 'page'){
+          this.changePage();
+        }
       }
     });
   }

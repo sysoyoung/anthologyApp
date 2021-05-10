@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-my-article',
   templateUrl: './my-article.component.html',
@@ -8,11 +7,26 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MyArticleComponent implements OnInit {
 
   @Input() article: any;
+  @Output() articleDeleted: EventEmitter<void> = new EventEmitter();
+  @Output() articlePosted: EventEmitter<void> = new EventEmitter();
+  @Output() articleHidden: EventEmitter<void> = new EventEmitter();
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
+  deleteArticle(event: any): void{
+    event?.stopPropagation();
+    this.articleDeleted.emit();
   }
 
+  postArticle(event: any): void{
+    event?.stopPropagation();
+    this.articlePosted.emit();
+  }
+
+  hideArticle(event: any): void{
+    event?.stopPropagation();
+    this.articleHidden.emit();
+  }
 }

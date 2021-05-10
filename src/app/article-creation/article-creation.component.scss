@@ -1,0 +1,26 @@
+.page_wrapper{
+    width: 900px;
+    margin: auto;
+
+    h1{
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        text-transform: uppercase;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px 10px 10px;
+
+        input{
+            width: 400px;
+            margin-top: 10px;
+            padding: 7px;
+            font-size: 16px;
+        }
+    }
+}
+
+
