@@ -1,10 +1,14 @@
+@import '../../assets/styles/colors.scss';
+
 .page_wrapper{
-    width: 900px;
+    width: 70%;
     margin: auto;
+    margin-bottom: 100px;
+    font-family: -apple-system,system-ui,"BlinkMacSystemFont","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 
     h1{
         text-align: center;
-        margin-top: 50px;
+        margin-top: 70px;
         margin-bottom: 50px;
         text-transform: uppercase;
     }
@@ -14,11 +18,69 @@
         flex-direction: column;
         padding: 0 10px 10px 10px;
 
-        input{
-            width: 400px;
+        label{
+            text-transform: uppercase;
+            margin-bottom: -5px;
+            margin-top: 25px;
+            margin-left: 10px;
+        }
+
+        input, textarea, select{
+            width: 100%;
             margin-top: 10px;
             padding: 7px;
             font-size: 16px;
+            box-sizing: border-box;
+            font-family: -apple-system,system-ui,"BlinkMacSystemFont","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+        }
+
+        #description{
+            height: 100px;
+            resize: vertical;
+        }
+
+        .source-links_wrapper, 
+        .tag_wrapper{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            
+            .source-button_wrapper,
+            .tag-button_wrapper{
+                align-self: flex-end;
+                button{
+                    margin-left: 20px;
+                    margin-top: 10px;
+                    padding: 7px;
+                    background-color: transparent;
+                    &:hover{
+                        background-color: #eef3eb;
+                    }
+                }
+            }
+        }
+
+        .source-links_wrapper{
+            .small-description{
+                margin-top: 3px;
+                margin-left: 10px;
+                font-size: 16px;
+            }
+            .sourse-form-block{
+                padding: 0 10px 10px 10px;
+                border: 1px solid $lightGreen;
+                margin-top: 10px;
+            }
+        }
+
+        .tag_wrapper{
+            button{
+                margin-right: 2px;
+            }
+        }
+
+        #text{
+            height: 1000px;
         }
     }
 }
