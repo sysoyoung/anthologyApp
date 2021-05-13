@@ -9,28 +9,23 @@ import { Observable } from 'rxjs';
 export class SearchService {
 
   private searchValue = '';
-  private arrayOfArticles: Array<object> = [];
 
   constructor(
     private router: Router,
     private http: HttpClient
     ) { }
 
-  public getSearchValue(): string {
-    return this.searchValue;
-  }
-
   public setSearchValue(value: string): void {
     this.searchValue = value;
   }
 
   public getAllArticles(): Observable<object>{
-    if (this.arrayOfArticles.length === 0){
-      this.setSearchValue(this.router.url.split('?')[1]?.split('&')[0]?.split('=')[1]);
+    if (this.searchValue.length === 0){
+      const myUrl = this.router.url;
+      this.setSearchValue(this.router.parseUrl(myUrl).queryParams.query);
     }
 
     const myParams = new HttpParams().set('query', this.searchValue);
-
     return this.http.get('http://localhost:3000/search', {params: myParams});
   }
 

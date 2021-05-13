@@ -13,7 +13,7 @@ import { RegistrationComponent } from './registration/registration.component';
 const routes: Routes = [
   { path: '', component: MainComponent },
   { path: 'search', component: ListComponent },
-  { path: 'page/:pageTitle', component: PageComponent },
+  { path: 'page/:pageId', component: PageComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'authentication', component: AuthComponent },
   { path: 'dashboard/:id', component: DashboardComponent, canActivate: [IsLoggedIn] },

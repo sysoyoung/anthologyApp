@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userService.getUserInfo().subscribe( (data: User) => {
+    this.userService.getUserInfo('').subscribe( (data: User) => {
       if (data.status){
         this.user = data;
         return;

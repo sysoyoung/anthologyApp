@@ -13,7 +13,7 @@ export class MyArticleComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   deleteArticle(event: any): void{
     event?.stopPropagation();
@@ -28,5 +28,10 @@ export class MyArticleComponent implements OnInit {
   hideArticle(event: any): void{
     event?.stopPropagation();
     this.articleHidden.emit();
+  }
+
+  getArticleDate(): string{
+    const date = new Date(this.article?.date);
+    return  date.getDate() + '.' + ('0' + (date.getMonth() + 1)).slice(-2) + '.' + date.getFullYear();
   }
 }

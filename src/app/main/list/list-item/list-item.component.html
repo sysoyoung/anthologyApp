@@ -1,4 +1,4 @@
-<div class="list-item" [routerLink]="'/page/' + getArticleTitleWithoutSpaces()">
+<div class="list-item" [routerLink]="'/page/' + article.id">
     <div class="list-item__title">{{article?.title}}</div>
     <div class="list-item__right-block">
         <div class="list-item__author">{{article?.author}}</div>

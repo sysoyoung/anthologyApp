@@ -41,9 +41,13 @@ export class UserService {
     return !this.jwtHelper.isTokenExpired();
   }
 
-  getUserInfo(): Observable<User>{
-    const temp = this.router.url.split('/');
-    return this.http.get('http://localhost:3000/account/dashboard/' + temp[temp.length - 1]) as Observable<User>;
+  getUserInfo(id: string): Observable<User>{
+    let userId = id;
+    if (id === ''){
+      const temp = this.router.url.split('/');
+      userId = temp[temp.length - 1];
+    }
+    return this.http.get('http://localhost:3000/account/dashboard/' + userId) as Observable<User>;
   }
 
   deleteArticle(id: string): void{

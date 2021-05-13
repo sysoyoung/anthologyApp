@@ -11,11 +11,14 @@ export class ListItemComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {  }
 
   getArticleTitleWithoutSpaces(): string{
     return this.article.title.split(' ').join('_');
+  }
+
+  getAuthorId(): string{
+    return this.article.authorId;
   }
 
   getArticleDate(): string{

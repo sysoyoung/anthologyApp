@@ -16,26 +16,20 @@ export class ListComponent implements OnInit {
   searchControl!: FormControl;
 
   public nothing = '';
-
   public arrayOfArticles: Array<object> = [];
 
   constructor(
     private searchService: SearchService,
-    private router: Router,
     private titlePage: Title,
-    ) {
-      this.router.events.subscribe( (event: Event) => {
-        if ( event instanceof NavigationEnd){
-          this.ngOnInit();
-        }
-      });
-    }
+    ) { }
 
   ngOnInit(): void {
-    this.titlePage.setTitle('Результати пошуку');
-
     this.searchControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
+    this.makeSearch();
+    this.titlePage.setTitle('Результати пошуку');
+  }
 
+  makeSearch(): void{
     this.searchService.getAllArticles().subscribe((articles: Array<object> | any) => {
       this.arrayOfArticles = articles;
       this.nothing = articles.length ? '' : 'Нічого не знайдено!';
@@ -43,7 +37,7 @@ export class ListComponent implements OnInit {
 
     setTimeout( () => {
       if (this.arrayOfArticles.length === 0 && this.nothing === ''){
-        this.nothing = 'Пока что не придумал что здесь написать';
+        this.nothing = 'Сервер не отвечает';
       }
     }, 3000);
   }
@@ -52,6 +46,7 @@ export class ListComponent implements OnInit {
     if (this.searchControl.valid){
       this.searchService.setSearchValue(this.searchControl.value);
       this.searchService.navigateToSearch();
+      this.makeSearch();
     }
   }
 }

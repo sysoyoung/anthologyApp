@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router, Event, NavigationStart } from '@angular/router';
+import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 
 interface RelatedArticle{
   title: string;
+  id: string;
 }
 
 interface Reference{
@@ -17,7 +18,7 @@ export interface ArticleInterface{
   author: string;
   date: number;
   relatedArticles: Array<RelatedArticle>;
-  references: Array<Reference>;
+  sources: Array<Reference>;
   tags: Array<string>;
   text: string;
 }
@@ -34,7 +35,11 @@ export class PageService {
     private http: HttpClient
     ) { }
 
-  setArticleId(): void{
+  setArticleId(id: string): void{
+    if (id !== ''){
+      this.articleId = id;
+      return;
+    }
     const articleIdFromUrl = /(?<=\/)[^\/.]+$/.exec(this.router.url);
     this.articleId = articleIdFromUrl ? articleIdFromUrl[0] : '';
   }

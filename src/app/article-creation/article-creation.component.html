@@ -5,9 +5,8 @@
     
     <form [formGroup]="articleFormGroup" (submit)="submit()">
         <label for="title">Заголовок статті*</label>
-        <input type="text" name="title" id="articleTitle" formControlName="title">
+        <input type="text" name="title" id="title" formControlName="title">
         <label for="language">Мова статті</label>
-        <!-- <input type="text" name="language" id="articleLang" formControlName="lang"> -->
         <select name="language" id="language" formControlName="lang">
             <option value="укр">Українська</option>
             <option value="рос">Російська</option>

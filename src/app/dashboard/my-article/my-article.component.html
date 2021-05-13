@@ -4,7 +4,7 @@
     <div class="list-item__right-block">
         <div class="right_block-info">
             <div class="list-item__author">{{article.author}}</div>
-            <div class="list-item__date">{{article.date}}</div>    
+            <div class="list-item__date">{{getArticleDate()}}</div>    
         </div>
         <button class="delete" (click)="deleteArticle($event)">Видалити</button>
         <button class="fix">Змінити</button>        

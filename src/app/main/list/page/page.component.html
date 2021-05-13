@@ -3,8 +3,8 @@
         <p>Related articles</p>
         <ul *ngIf="article && article.relatedArticles">
             <li *ngFor="let relatedArticle of article.relatedArticles">
-                <a [routerLink]="'/page/' + getArticleTitleWithoutSpaces(relatedArticle.title)">
-                    {{relatedArticle?.title}}
+                <a (click)='navigateToArticle(relatedArticle.id)'>
+                    {{relatedArticle.title}}
                 </a>
             </li>
         </ul>
@@ -24,16 +24,22 @@
         </div>
         <div class="footer_block">
             <div class="references_block">
-                <ol *ngIf="article && article.references">
-                    <li *ngFor="let reference of article.references">
-                        <div *ngIf="reference?.link === ''">{{reference.title}}</div>
-                        <a *ngIf="reference?.link !== ''" [href]="reference.link">{{reference?.title}}</a>
+                <ol *ngIf="article && article.sources">
+                    <li *ngFor="let source of article.sources">
+                        <div *ngIf="source?.link === ''">{{source.title}}</div>
+                        <a *ngIf="source?.link !== ''" [href]="source.link">{{source?.title}}</a>
                     </li>
                 </ol>
             </div>
             <div class="tags_block" *ngIf="article && article.tags">
                 <a *ngFor="let tag of article.tags" (click)="searchByTag(tag)">{{tag}}</a>
             </div>
+        </div>
+    </section>
+
+    <section *ngIf="!article">
+        <div class="header_block">
+            <h1>Стаття не знайдена</h1>
         </div>
     </section>
 </div>

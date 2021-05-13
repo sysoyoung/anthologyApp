@@ -30,6 +30,5 @@ export class MainComponent implements OnInit {
       this.searchService.setSearchValue(this.searchControl.value);
       this.searchService.navigateToSearch();
     }
-    return;
   }
 }

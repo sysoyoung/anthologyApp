@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
+import { User, UserService } from '../dashboard/user.service';
+import { ArticleCreationService } from './article-creation.service';
 
 @Component({
   selector: 'app-article-creation',
@@ -10,9 +14,24 @@ export class ArticleCreationComponent implements OnInit {
 
   articleFormGroup!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private articleCreation: ArticleCreationService,
+    private authService: AuthService,
+    private router: Router,
+    private userService: UserService
+    ) {
+      this.userService.getUserInfo(this.authService.getUserIdfromStorage()).subscribe( (data: User) => {
+        if (!data.status){
+          this.userService.logout();
+        }
+      });
+    }
 
   ngOnInit(): void {
+
+
+
 
     this.articleFormGroup = this.fb.group({
       title: ['Приклад хорошого заголовку', Validators.required],
@@ -20,7 +39,7 @@ export class ArticleCreationComponent implements OnInit {
       description: ['Дуже короткий опис статті'],
       sources: this.fb.array([
         this.fb.group({
-          title: ['Приклад: Онтологічне моделювання'],
+          title: ['Приклад: Введение в онтологическое моделирование'],
           link: ['Приклад: https://trinidata.ru/files/SemanticIntro.pdf']
         })
       ]),
@@ -68,9 +87,26 @@ export class ArticleCreationComponent implements OnInit {
 
   submit(): void{
     if (this.articleFormGroup.valid){
-      console.log(this.articleFormGroup.value);
+      const titleElement = document.getElementById('title');
+
+      const title = this.articleFormGroup.value.title;
+      const author = this.authService.getUserNameFromStorage();
+
+      this.articleCreation.checkTitle(title, author).subscribe( (responce: any) => {
+        if (responce.valid){
+          console.log(this.articleFormGroup.value);
+          titleElement?.classList.remove('red-border');
+          this.articleCreation.createArticle(this.articleFormGroup.value).subscribe( (responce: any) => {
+            if (responce.success){
+              this.router.navigate(['/dashboard/' + this.authService.getUserIdfromStorage()]);
+            }
+          });
+          return;
+        }
+        titleElement?.classList.add('red-border');
+        titleElement?.scrollIntoView();
+      });
     }
-    console.log('submited');
   }
 
 }

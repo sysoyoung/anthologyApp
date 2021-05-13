@@ -81,8 +81,11 @@
 
         #text{
             height: 1000px;
+            resize: vertical;
         }
     }
 }
 
-
+.red-border{
+    border-color: red;
+}

@@ -21,6 +21,9 @@ aside{
         margin: 10px;
         li{
             margin-top: 3px;
+            a{
+                cursor: pointer;
+            }
         }    
     }   
 }
@@ -64,9 +67,10 @@ section{
             }
         }
         .tags_block{
-            margin-top: 5px;
+            margin-top: 10px;
             a{
                 margin-left: 3px;
+                padding: 0 2px;
                 cursor: pointer;
             }
         }

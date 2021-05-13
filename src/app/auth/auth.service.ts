@@ -30,6 +30,10 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('user') || '')?.id  || '';
   }
 
+  getUserNameFromStorage(): string{
+    return JSON.parse(localStorage.getItem('user') || '')?.name || '';
+  }
+
   logout(): void{
     this.token = null;
     this.user = null;

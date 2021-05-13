@@ -19,26 +19,22 @@ export class PageComponent implements OnInit {
     private router: Router,
     private searchService: SearchService,
     private titlePage: Title
-    ) {
-    // tslint:disable-next-line: deprecation
-    this.router.events.subscribe((event: Event) => {
-      if ( event instanceof NavigationEnd){
-        const page = router.url.split('/');
-        if (page[page.length - 2] === 'page'){
-          this.changePage();
-        }
-      }
-    });
+    ) { }
+
+  ngOnInit(): void {
+    this.pageService.setArticleId('');
+    this.changePage();
   }
 
-  ngOnInit(): void { }
-
   changePage(): void{
-    this.pageService.setArticleId();
-    this.pageService.getArticle().subscribe((a: any) => {
-      this.article = a;
-      this.titlePage.setTitle(this.article?.title || 'Anthology');
-      this.decomposeText();
+    this.pageService.getArticle().subscribe((article: any) => {
+      if (article.success){
+        this.article = article;
+        this.titlePage.setTitle(this.article?.title || 'Anthology');
+        this.decomposeText();
+        return;
+      }
+      this.article = undefined;
     });
   }
 
@@ -50,8 +46,10 @@ export class PageComponent implements OnInit {
     return '';
   }
 
-  getArticleTitleWithoutSpaces(title: string): string{
-    return title.split(' ').join('_');
+  navigateToArticle(id: string): void{
+    this.router.navigate(['/page/' + id]);
+    this.pageService.setArticleId(id);
+    this.changePage();
   }
 
   searchByTag(searchValue: string): void{
