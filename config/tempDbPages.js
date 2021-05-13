@@ -1,22 +1,6 @@
 module.exports.page = [
     {
-        id: 'title_one',
-        title: 'temporary fixed title',
-        author: 'max sys',
-        date: +new Date(),
-        relatedArticles: [
-          {title: 'relate one'},
-          {title: 'relate five'},
-          {title: 'relate three'},
-          {title: 'relate four'},
-        ],
-        references: [
-          {link: 'http://localhost:4200/page/relate_three', title: 'Lorem, ipsum.'},
-          {link: 'https://google.com', title: 'Lorem, ipsum.'},
-          {link: '', title: 'Lorem, ipsum.'},
-          {link: 'https://habr.com/ru/post/140612/#:~:text=SCSS%20%E2%80%94%20%22%D0%B4%D0%B8%D0%B0%D0%BB%D0%B5%D0%BA%D1%82%22%20%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0%20SASS,%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%B2%20%D0%BE%D0%B1%D1%8B%D1%87%D0%BD%D1%8B%D0%B9%20CSS%20%D0%BA%D0%BE%D0%B4.', title: 'Lorem, ipsum.'},
-        ],
-        tags: [ 'one', 'two', 'three', 'four'],
+        id: '1',
         text: `<h2>Текст на русском</h2>
         Когда человек сознательно или интуитивно выбирает себе в жизни какую-то цель, жизненную задачу, он невольно дает себе оценку. По тому, ради чего человек живет, можно судить и о его самооценке - низкой или высокой.
         Если человек живет, чтобы приносить людям добро, облегчать их страдания, давать людям радость, то он оценивает себя на уровне этой своей человечности. Он ставит себе цель, достойную человека.
@@ -50,5 +34,10 @@ module.exports.page = [
         Doloribus et iusto rerum? Repellendus laborum odio optio eius inventore at delectus dignissimos rerum omnis deleniti minus eveniet aspernatur incidunt atque harum aut iusto modi quam, praesentium tempora. Est, qui?
         Consequuntur accusantium, archi<h2>123</h2>tecto suscipit, numquam at alias quasi cupiditate expedita maxime tempora commodi laboriosam sit, nisi ex voluptatibus? Laborum asperiores quisquam, debitis saepe tenetur delectus quidem odio a. Nihil, porro?
         Adipisci, perferendis doloribus. Odit, illo. Reiciendis suscipit quidem laboriosam voluptates consectetur ipsa veritatis provident perspiciatis dolor rerum, totam odio distinctio hic fuga corporis labore molestiae enim aliquid cupiditate asperiores voluptatem.`,
+      },
+      {
+        id: '2',
+        text: `<h2>KEKW</h2>
+        KEKW`,
       },
 ]

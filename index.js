@@ -6,9 +6,8 @@ const path = require('path');
 
 const account = require('./routes/account');
 const article = require('./routes/article');
-
-const tempDbPages = require('./config/tempDbPages');
-const tempDbListOfPAges = require('./config/tempDpListOfPages');
+const page = require('./routes/page');
+const search = require('./routes/search');
 
 const app = express();
 const port = 3000;
@@ -21,23 +20,10 @@ require('./config/passport')(passport);
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/search', (req, res) => {
-    let myQuery = req.query.query;
-    // let b = req.query.type;
-    let myResponse = tempDbListOfPAges.tempArrayOfArticles.filter( a => a.title.toLowerCase().includes(myQuery));
-
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.send(JSON.stringify(myResponse));
-})
-
-app.get('/page/:id', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    tempDbPages.page[0].title = req.params.id.split('_').join(' ');
-    res.send(JSON.stringify(tempDbPages.page[0]));
-})
-
 app.use('/account', account);
 app.use('/article', article);
+app.use('/page', page);
+app.use('/search', search);
 
 app.listen(port, () => {
     console.log(`server working. port: ${port}`);

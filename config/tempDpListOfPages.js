@@ -1,6 +1,57 @@
 module.exports.tempArrayOfArticles = [
-    {id: 'title_one', title: 'title one', author: 'max sys', date: +new Date(), status: 'hidden' },
-    { id: 'title_two', title: 'title two', author: 'max', date: +new Date(), status: 'posted' },
-    { id: 'KEKW_title', title: 'KEKW title', author: 'sys', date: +new Date(), status: 'posted' },
-    { id: 'title_four', title: 'title four', author: 'kek 4ebuk', date: +new Date(), status: 'hidden' },
+    { 
+        id: '1',
+        title: 'title one',
+        lang: 'анг',
+        description: 'example of short description',
+        authorId: 'a000b',
+        author: 'qwe qwe',
+        date: +new Date(),
+        status: 'posted',
+        sources: [
+            {
+                title: 'some title',
+                link: '',
+            },
+            {
+                title: 'another title',
+                link: 'https://www.google.com/',
+            },
+        ],
+        tags: ['example', 'text', 'something'],
+        relatedArticles: [
+            {
+                title: 'title kek',
+                id: '2'
+            }
+        ]
+    },
+    { 
+        id: '2',
+        title: 'title kek',
+        lang: 'анг',
+        description: 'kek description',
+        authorId: 'a000b',
+        author: 'qwe qwe',
+        date: +new Date(),
+        status: 'posted',
+        sources: [
+            {
+                title: 'KEKW',
+                link: '',
+            },
+            {
+                title: 'KEKwait',
+                link: 'https://www.google.com/',
+            },
+        ],
+        tags: ['smile', 'kekw', 'kek'],
+        relatedArticles: [
+            {
+                title: 'title one',
+                id: '1',
+            }
+        ]
+    },
+    
 ];

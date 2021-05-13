@@ -10,10 +10,20 @@ class User{
     static users = [];
 
     constructor(name, email, password){
-        this.id = [name,email].join('_');
+        this.id = this.createId(email);
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    createId(email){
+        let newId = email.replace(/@.+/, '').split('');
+        let a = '', b ='';
+        for(let i = 0; i < newId.length; i++)
+            i%2==0? a += newId[i] : b += newId[i];
+
+        let number = +(a+b).split('').map( word => word.charCodeAt(0)-48).join('');
+        return number.toString(16);
     }
 
     static addUser(user){

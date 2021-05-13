@@ -6,7 +6,9 @@ const config = require('../config/db');
 
 const user = require('../models/user');
 const User = user.User;
-const myArticles = require('../config/tempDpListOfPages');
+
+const articles = require('../models/article');
+const Article = articles.Article;
 
 router.post('/reg', (req, res) => {
     
@@ -60,7 +62,7 @@ router.get('/dashboard/:id', (req, res) => {
         return;
     }
     user.status = true;
-    user.articles = myArticles.tempArrayOfArticles;
+    user.articles = Article.getUserArticles(userId);
     
     res.json(user);
 });
@@ -78,5 +80,5 @@ router.get('/setuser', (req, res) => {
 
     res.send(unswer);
 });
-
+//-----------------------------
 module.exports = router;
