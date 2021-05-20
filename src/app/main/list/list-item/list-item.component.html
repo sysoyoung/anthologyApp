@@ -1,7 +1,13 @@
 <div class="list-item" [routerLink]="'/page/' + article.id">
-    <div class="list-item__title">{{article?.title}}</div>
-    <div class="list-item__right-block">
-        <div class="list-item__author">{{article?.author}}</div>
-        <div class="list-item__date">{{getArticleDate()}}</div>    
+    <div class="list-item__top">
+        <div class="list-item__title">{{article?.title}}</div>
+        <div class="list-item__right-block">
+            <div class="list-item__author">{{article?.author}}</div>
+            <div class="list-item__date">{{getArticleDate()}}</div>    
+        </div>
     </div>
+    <div class="description">
+        <p>{{article.description}}</p>
+    </div>
+    <div class="language">{{article.lang}}</div>
 </div>

@@ -1,5 +1,5 @@
 
-<div class="page_wrapper">
+<div class="page_wrapper" *ngIf="isCreateForm">
 
     <h1>Створення статті</h1>
     
@@ -44,7 +44,7 @@
         <label for="text">Текст статті</label>
         <textarea lang="uk" name="text" id="text" formControlName="text"></textarea>
 
-        <input type="submit" value="Створити статтю">        
+        <input type="submit" [value]="cArticle? 'Змінити статтю': 'Створити статтю'">        
     </form>
 
     

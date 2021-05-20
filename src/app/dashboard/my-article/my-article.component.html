@@ -3,11 +3,10 @@
     <div class="list-item__title">{{article.title}}</div>
     <div class="list-item__right-block">
         <div class="right_block-info">
-            <div class="list-item__author">{{article.author}}</div>
             <div class="list-item__date">{{getArticleDate()}}</div>    
         </div>
         <button class="delete" (click)="deleteArticle($event)">Видалити</button>
-        <button class="fix">Змінити</button>        
+        <button class="fix" (click)="changeArticle($event)">Змінити</button>        
         <button class="hide" *ngIf="article.status === 'posted'" (click)="hideArticle($event)">Сховати</button>        
         <button class="post" *ngIf="article.status === 'hidden'" (click)="postArticle($event)">Запостити</button>
     </div>

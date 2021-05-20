@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, Event, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { SearchService } from 'src/app/search.service';
 import { PageService, ArticleInterface } from './page.service';
 

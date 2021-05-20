@@ -8,6 +8,8 @@ import { AuthService } from '../auth/auth.service';
 })
 export class ArticleCreationService {
 
+  public articleToChange: any;
+
   constructor(
     private http: HttpClient,
     private authService: AuthService
@@ -22,5 +24,12 @@ export class ArticleCreationService {
     headers.append('Content-Type', 'application/json');
     const authorId = this.authService.getUserIdfromStorage();
     return this.http.post('http://localhost:3000/article/create/' + authorId, article, { headers });
+  }
+
+  changeArticle(article: object): Observable<object>{
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    const authorId = this.authService.getUserIdfromStorage();
+    return this.http.post('http://localhost:3000/article/change/' + authorId, article, { headers });
   }
 }

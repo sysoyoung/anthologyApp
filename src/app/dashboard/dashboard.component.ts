@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { UserService, User, Article } from './user.service';
 
 @Component({
@@ -11,13 +12,15 @@ export class DashboardComponent implements OnInit {
   user!: any;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private titlePage: Title,
   ) { }
 
   ngOnInit(): void {
     this.userService.getUserInfo('').subscribe( (data: User) => {
       if (data.status){
         this.user = data;
+        this.titlePage.setTitle(this.user.name);
         return;
       }
       this.userLogout();

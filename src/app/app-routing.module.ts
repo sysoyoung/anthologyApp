@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'authentication', component: AuthComponent },
   { path: 'dashboard/:id', component: DashboardComponent, canActivate: [IsLoggedIn] },
   { path: 'dashboard/article/creature', component: ArticleCreationComponent, canActivate: [IsLoggedIn] },
+  { path: 'dashboard/article/change/:id', component: ArticleCreationComponent, canActivate: [IsLoggedIn] },
 ];
 
 @NgModule({

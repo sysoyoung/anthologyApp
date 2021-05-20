@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { emailValidator, minLengthValidator, passwordValidator, requiredValidator } from 'src/assets/scripts/validation';
 import { AuthService } from './auth.service';
@@ -19,7 +20,8 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private titlePage: Title
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +29,7 @@ export class AuthComponent implements OnInit {
     this.passwordControl = new FormControl('', [passwordValidator,
                                                 minLengthValidator(4, 'password'),
                                                 requiredValidator]);
-
+    this.titlePage.setTitle('Автентифікація');
   }
 
   userAuthClick(): boolean{

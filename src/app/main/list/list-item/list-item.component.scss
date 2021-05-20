@@ -2,11 +2,8 @@
 
 .list-item{
     width: 100%;
-    height: 70px;
     background-color: $lightGreen;
     margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
     color: $darckBlue;
     border-radius: 5px;
     border: 1px solid transparent;
@@ -14,26 +11,46 @@
         cursor: pointer;
         border-color: $green;
     }
-}
 
-.list-item__title{
-    margin: 17px;
-    font-size: 30px;
-}
-
-.list-item__right-block{
-    margin: 15px;
-    text-align: right;
-
-    .list-item__author{
-        font-size: 20px;
-    }
+    .list-item__top{
+        display: flex;
+        justify-content: space-between;
+        height: 70px;
     
-    .list-item__date{
-        margin-top: 3px;
-        font-size: 12px;
+        .list-item__title{
+            margin: 17px;
+            font-size: 30px;
+        }
+        
+        .list-item__right-block{
+            margin: 15px;
+            text-align: right;
+        
+            .list-item__author{
+                font-size: 20px;
+            }
+            
+            .list-item__date{
+                margin-top: 3px;
+                font-size: 12px;
+            }
+        }
+    }
+
+    .description{
+        max-height: 100px;
+        padding: 5px 20px;
+        p{
+            margin: 0;
+            -webkit-line-clamp: 6;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden; 
+        }
+    }
+
+    .language{
+        padding: 5px 15px;
+        text-align: right;    
     }
 }
-
-
-
