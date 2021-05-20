@@ -67,6 +67,36 @@ router.post('/create/:authorId', (req, res) => {
     res.json({ success: true });
 })
 
+router.post('/change/:authorId', (req, res) => {
+
+    const authorId = req.params.authorId;
+    const authorName = User.getUserById(authorId).name;
+
+    const rqB = req.body;
+
+    const newArticle = new Article(
+        rqB.title,
+        rqB.lang,
+        rqB.description,
+        authorId,
+        authorName,
+        rqB.sources,
+        rqB.tags,
+        rqB.relatedArticles,
+        rqB.id,
+        rqB.date,
+    );
+
+    Article.deleteArticle(rqB.id);
+    newArticle.saveArticle();
+
+    const newPage = new Page( newArticle.getId(), req.body.text );
+    Page.deletePage(rqB.id);
+    newPage.savePage();
+
+    res.json({ success: true });
+})
+
 router.get('/getall', (req, res) => {
     
     

@@ -56,6 +56,13 @@ router.get('/dashboard/:id', (req, res) => {
     let userId = req.params.id;
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
 
+    const token = req.headers.authorization.split(' ')[2];
+    const decoded = jwt.verify(token, config.secret);
+    if(userId !== decoded.id){
+        res.json({ status: false, message: 'uesr is not logged in'});
+        return;
+    }
+
     const user = User.getUserById(userId);
     if(!user){
         res.json({ status: false, message: 'user not found'});

@@ -16,10 +16,14 @@ class Article{
 
     static id = 3;
 
-    constructor(title, lang, description, authorId, author, sources, tags, relatedArticles){
-        Article.id += 1;
+    constructor(title, lang, description, authorId, author, sources, tags, relatedArticles, id = 0, date = 0){
+        if(id === 0){
+            Article.id += 1;
+            this.id = Article.id.toString();
+        } else {
+            this.id = id;
+        }
 
-        this.id = Article.id.toString();
         this.title = title;
         this.lang = lang;
         this.description = description;
@@ -29,7 +33,7 @@ class Article{
         this.tags = tags.filter( tag => tag);
         this.relatedArticles = relatedArticles;
         
-        this.date = +new Date();
+        this.date =  date === 0? +new Date(): date;
         this.status = 'hidden';
     }
 
