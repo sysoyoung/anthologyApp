@@ -30,6 +30,6 @@ export class ArticleCreationService {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     const authorId = this.authService.getUserIdfromStorage();
-    return this.http.post('http://localhost:3000/article/change/' + authorId, article, { headers });
+    return this.http.put('http://localhost:3000/article/change/' + authorId, article, { headers });
   }
 }

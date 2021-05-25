@@ -47,7 +47,7 @@ export class ArticleCreationComponent implements OnInit {
       return;
     }
 
-    if (this.articleCreation.articleToChange?.id === articleChangeId){
+    if (this.articleCreation.articleToChange?.id === +articleChangeId){
       this.isCreateForm = true;
       this.titlePage.setTitle('Змінення статті');
       this.cArticle = this.articleCreation.articleToChange;
