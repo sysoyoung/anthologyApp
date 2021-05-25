@@ -1,6 +1,9 @@
 const pageDb = require('../config/tempDbPages');
 let pages = pageDb.page;
 
+const fetch = require('node-fetch');
+const db = require('../config/db');
+const queryHelper = require('../config/query');
 class Page{
     id;
     text;
@@ -11,28 +14,36 @@ class Page{
     }
 
     static deletePage(id){
-        let index = -1;
-        pages.find( (item, i) => {
-            if(item.id === id){
-                index = i;
-                return true;
-            }
-        });
+        const query = db.prefix + `
+            delete where{
+                art:text${+id} ?a ?b
+            }`;
 
-        pages.splice(index, 1);
+        fetch(db.url, queryHelper.getPostObj(query))
+        return true;
     }
 
     static getPage(id){
-        return pages.find( page => page.id === id);
+        const query = db.prefix + `
+            select ?text where{
+                art:text${id} art:text ?text
+            }`;
+
+        let url = queryHelper.createQueryUrl(query);
+
+        return fetch(url).then( res => res.json());
     }
 
     savePage(){
-        const newPage = {
-            id: this.id,
-            text: this.text,
-        };
-
-        pages.push(newPage);
+        const query = db.prefix + `
+            insert data{
+                art:text${this.id} rdf:type owl:NamedIndividual;
+                    rdf:type art:Text;
+                    art:id ${this.id};
+                    art:text "${this.text}";
+            }`;
+        fetch(db.url, queryHelper.getPostObj(query));
+        return true;
     }
 }
 

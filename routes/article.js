@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const parcer = require('../config/parse');
 
 let qwe = require('../config/tempDpListOfPages');
 let asd = qwe.tempArrayOfArticles;
@@ -37,34 +38,49 @@ router.get('/check/:author/:title', (req, res) => {
     let title = req.params.title;
     let author = req.params.author;
 
-    if(Article.isSameArticleAuthor(title, author)){
-        res.json({valid: false});
-        return;
-    }
-    res.json({valid: true});
+    Article.isSameArticleAuthor(title, author)
+    .then(data => {
+        if(data.boolean){
+            res.json({valid: false});
+            return;
+        }
+        res.json({valid: true});
+    })
 })
 
 router.post('/create/:authorId', (req, res) => {
 
     const authorId = req.params.authorId;
-    const authorName = User.getUserById(authorId).name;
+   
+    User.getUserById(authorId)
+    .then( userObj => {
+        let user = parcer.parceObj(userObj)
+        const authorName = user.name;
 
-    const newArticle = new Article(
-        req.body.title,
-        req.body.lang,
-        req.body.description,
-        authorId,
-        authorName,
-        req.body.sources,
-        req.body.tags,
-        req.body.relatedArticles,
-    );
-    newArticle.saveArticle();
+        Article.getId()
+        .then( data => {
+            const artId = parcer.parceObj(data).id
+            Article.setId(artId);
 
-    const newPage = new Page( newArticle.getId(), req.body.text );
-    newPage.savePage();
+            const newPage = new Page( artId, req.body.text );
+            newPage.savePage();
 
-    res.json({ success: true });
+            const newArticle = new Article(
+                artId,
+                req.body.title,
+                req.body.lang,
+                req.body.description,
+                authorId,
+                authorName,
+                req.body.sources,
+                req.body.tags,
+                req.body.relatedArticles,
+            );
+            newArticle.saveArticle();
+
+            res.json({ success: true });
+        })
+    })
 })
 
 router.post('/change/:authorId', (req, res) => {
@@ -95,12 +111,6 @@ router.post('/change/:authorId', (req, res) => {
     newPage.savePage();
 
     res.json({ success: true });
-})
-
-router.get('/getall', (req, res) => {
-    
-    
-    res.json(asd);
 })
 
 module.exports = router;

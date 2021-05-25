@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
-//подкулючение к бд должно быть
+const fetch = require('node-fetch');
 
+const db = require('../config/db');
+const queryHelper = require('../config/query');
 class User{
     id;
     name;
@@ -9,8 +11,8 @@ class User{
 
     static users = [];
 
-    constructor(name, email, password){
-        this.id = this.createId(email);
+    constructor(id, name, email, password){
+        this.id = id? id: this.createId(email);
         this.name = name;
         this.email = email;
         this.password = password;
@@ -26,43 +28,56 @@ class User{
         return number.toString(16);
     }
 
-    static addUser(user){
-        if(User.users.find( item => item.email == user.email)){
-            return 'Email exist';
-        }
-
+    static hashPassword(user){
         bcrypt.genSalt(13, (err, salt) => {
             bcrypt.hash(user.password, salt, (err, hash) => {
                 if(err) throw err;
                 user.password = hash;
-                User.users.push(user);
+                User.saveUser(user);
             });
         });
-
-        return 'User added';
     }
 
-    static getUsers(){
-        return User.users;
+    static saveUser(user){
+        let query = db.prefix + `
+            insert data{
+                art:user${user.id} rdf:type owl:NamedIndividual;
+                            rdf:type art:User;
+                            art:id "${user.id}";
+                            art:name "${user.name}";
+                            art:email "${user.email}";
+                            art:password "${user.password}";
+            }
+        `;
+        fetch(db.url, queryHelper.getPostObj(query));
     }
 
-    static getUserByEmail(mail){
-        const tempUser = User.users.find(user => user.email === mail);
-        return tempUser ? {
-            id : tempUser.id,
-            name: tempUser.name,
-            email: tempUser.email,
-            password: tempUser.password
-        } : false;
+    static getUserByEmail(email){
+        let query = db.prefix + `
+            select ?id ?name ?password where{
+                ?user art:email "${email}";
+                        art:id ?id;
+                        art:name ?name;
+                        art:password ?password;
+            }
+        `;
+
+        let url = queryHelper.createQueryUrl(query);
+        return fetch(url)
+                .then(res => res.json());
     }
 
     static getUserById(id){
-        const tempUser = User.users.find(user => user.id === id);
-        return tempUser ? {
-            id,
-            name: tempUser.name,
-            email: tempUser.email,
-        } : false;
+        let query = db.prefix + `
+            select * where{
+                art:user${id} art:name ?name;
+                                art:email ?email
+            }
+        `;
+
+        let url = queryHelper.createQueryUrl(query);
+        return fetch(url)
+                    .then(res => res.json());
     }
 
     static comparePass(passFromUser, userPass, callback){
@@ -70,6 +85,13 @@ class User{
             if(err) throw err;
             callback(null, isMatch);
         })
+    }
+
+    static checkExistance(email){
+        let query = db.prefix + `ask{ ?user art:email "${email}" }`;
+        let queryUrl = queryHelper.createQueryUrl(query);
+        return fetch(queryUrl)
+            .then( res => res.json())
     }
 
     static findOne({id}, callback){

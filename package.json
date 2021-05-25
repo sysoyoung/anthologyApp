@@ -8,13 +8,14 @@
     "start": "node index"
   },
   "dependencies": {
-    "express": "*",
     "bcryptjs": "*",
-    "passport": "*",
-    "passport-jwt": "*",
     "body-parser": "*",
     "cors": "*",
-    "jsonwebtoken": "*"
+    "express": "*",
+    "jsonwebtoken": "*",
+    "node-fetch": "^2.6.1",
+    "passport": "*",
+    "passport-jwt": "*"
   },
   "author": "flex",
   "license": "ISC"
