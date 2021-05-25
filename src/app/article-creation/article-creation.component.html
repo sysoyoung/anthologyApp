@@ -1,51 +1,86 @@
+<div class="for-click" (click)="showProposedArticles = false">
+    <div class="page_wrapper" *ngIf="isCreateForm">
 
-<div class="page_wrapper" *ngIf="isCreateForm">
+        <h1>Створення статті</h1>
+        
+        <form [formGroup]="articleFormGroup">
+            <label for="title">Заголовок статті*</label>
+            <input type="text" name="title" id="title" formControlName="title">
+            <label for="language">Мова статті</label>
+            <select name="language" id="language" formControlName="lang">
+                <option value="укр">Українська</option>
+                <option value="рос">Російська</option>
+                <option value="анг">Англійська</option>
+            </select>
+            <label for="description">Короткий опис статті</label>
+            <textarea name="description" id="description" formControlName="description"></textarea>
+        
 
-    <h1>Створення статті</h1>
-    
-    <form [formGroup]="articleFormGroup" (submit)="submit()">
-        <label for="title">Заголовок статті*</label>
-        <input type="text" name="title" id="title" formControlName="title">
-        <label for="language">Мова статті</label>
-        <select name="language" id="language" formControlName="lang">
-            <option value="укр">Українська</option>
-            <option value="рос">Російська</option>
-            <option value="анг">Англійська</option>
-        </select>
-        <label for="description">Короткий опис статті</label>
-        <textarea name="description" id="description" formControlName="description"></textarea>
-    
-
-        <div class="source-links_wrapper" formArrayName="sources">
-            <label for="">Список використаної літератури</label>
-            <span class="small-description">(Посилання на джерело літератури може бути пустим)</span>
-            <div class="sourse-form-block" *ngFor="let _ of getSourcesFormArray().controls; let i = index" [formGroupName]="i">
-                <input type="text" placeholder="Назва джерела" formControlName="title">
-                <input type="text" placeholder="Посилання на джерело" formControlName="link">
+            <div class="source-links_wrapper" formArrayName="sources">
+                <label for="">Список використаної літератури</label>
+                <span class="small-description">(Посилання на джерело літератури може бути пустим)</span>
+                <div class="sourse-form-block" *ngFor="let _ of getSourcesFormArray().controls; let i = index" [formGroupName]="i">
+                    <input type="text" placeholder="Назва джерела" formControlName="title">
+                    <input type="text" placeholder="Посилання на джерело" formControlName="link">
+                </div>
+                <div class="source-button_wrapper">
+                    <button (click)="removeLastSourceFromGroup($event); $event.preventDefault()">Видалити джерело</button>
+                    <button (click)="createNewSourceFromGroup(); ; $event.preventDefault()">Додати джерело</button>
+                </div>
             </div>
-            <div class="source-button_wrapper">
-                <button (click)="removeLastSourceFromGroup($event); $event.preventDefault()">Видалити джерело</button>
-                <button (click)="createNewSourceFromGroup(); ; $event.preventDefault()">Додати джерело</button>
+
+            <div class="tag_wrapper">
+                <label for="">Теги для пошуку статті</label>
+                <ul formArrayName="tags">
+                    <li *ngFor="let _ of getTagsFormArray().controls; let i = index">
+                        <input placeholder="Тег" type="text" formControlName="{{i}}">
+                    </li>
+                </ul>
+                <div class="tag-button_wrapper">
+                    <button (click)="removeLastTagControl();$event.preventDefault()">Видалити тег</button>
+                    <button (click)="createNewTagControl(); $event.preventDefault()">Додати тег</button>
+                </div>  
             </div>
-        </div>
 
-        <div class="tag_wrapper">
-            <label for="">Теги для пошуку статті</label>
-            <ul formArrayName="tags">
-                <li *ngFor="let _ of getTagsFormArray().controls; let i = index">
-                    <input placeholder="Тег" type="text" formControlName="{{i}}">
-                </li>
-            </ul>
-            <div class="tag-button_wrapper">
-                <button (click)="removeLastTagControl();$event.preventDefault()">Видалити тег</button>
-                <button (click)="createNewTagControl(); $event.preventDefault()">Додати тег</button>
-            </div>  
-        </div>
-        <label for="text">Текст статті</label>
-        <textarea lang="uk" name="text" id="text" formControlName="text"></textarea>
+            <div class="relates_wrapper">
+                <label for="related_article">Пов'язані статті</label>
+                <div class="relates_block">
+                    <ul>
+                        <li *ngFor="let art of relatedArticleArray; let i = index">
+                            <div class="art_text">
+                                <span class="art_title">{{art?.title}}</span>
+                                <span class="art_author">({{art?.author}})</span>
+                                <span class="art_id">{{art?.id}}</span>
+                            </div>
+                            <button (click)="deleteRelatedFromArray(i)">Видалити</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- (blur)="checkBlur($event)" -->
+                <span (click)="checkListLength(); $event.stopPropagation()">
+                    <input type="text" name="related_article" 
+                    id="related_article" placeholder="Назва статті" 
+                    autocomplete = "off" 
+                    [formControl]="relatedArticleControl"
+                    (focus)="checkListLength()">
+                    <ul class="related-list" *ngIf="showProposedArticles">
+                        <li *ngFor="let art of proposedArticlesArray" (mousedown)="addArticleToRelated(art)">
+                            <span class="art_title">{{art?.title}}</span>
+                            <span class="art_author">({{art?.author}})</span>
+                            <span class="art_id">{{art?.id}}</span>
+                        </li>
+                    </ul>
+                </span>
+                
+            </div>
 
-        <input type="submit" [value]="cArticle? 'Змінити статтю': 'Створити статтю'">        
-    </form>
+            <label for="text">Текст статті</label>
+            <textarea lang="uk" name="text" id="text" formControlName="text"></textarea>
+
+            <input type="submit" [value]="cArticle? 'Змінити статтю': 'Створити статтю'" (click)="submit()">        
+        </form>
 
     
+    </div>
 </div>
+

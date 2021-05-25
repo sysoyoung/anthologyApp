@@ -1,5 +1,9 @@
 @import '../../assets/styles/colors.scss';
 
+.for-click{
+    width: 100%;
+}
+
 .page_wrapper{
     width: 70%;
     margin: auto;
@@ -84,6 +88,79 @@
             resize: vertical;
         }
     }
+
+    .relates_wrapper{
+        margin-top: 20px;
+        position: relative;
+        
+        .relates_block{
+            margin-top: 10px;
+            li{
+                display: flex;
+                justify-content: space-between;
+                padding: 8px;
+                margin: 0 10px;
+                border-bottom: 1px solid $lightGreen;
+                .art_text{
+                    margin-top: 8px;
+                    .art_title{
+                        font-size: 18px;
+                    }
+                    .art_author{
+                        font-size: 16px;
+                        margin-left: 10px;
+                    }
+                    .art_id{
+                        font-size: 10px;
+                        color: #5a5a5a;
+                    }
+                }
+ 
+                button{
+                    padding: 7px;
+                    background-color: transparent;
+                    &:hover{
+                        background-color: #eef3eb;
+                    }
+                }
+            }
+        }
+
+        .related-list{
+            max-height: 300px;
+            border: 2px solid $darckBlue;
+            margin-top: -1px;
+            position: absolute;
+            width: 100%;
+            background-color: white;
+            box-sizing: border-box;
+            overflow: auto;
+
+            li{
+                padding: 3px;
+                border-bottom: 1px solid $darckBlue;
+                cursor: context-menu;
+
+                &:hover{
+                    background-color: #eef3eb;
+                    z-index: -1;
+                }
+
+                .art_title{
+                    font-size: 18px;
+                }
+                .art_author{
+                    font-size: 16px;
+                    margin-left: 10px;
+                }
+                .art_id{
+                    font-size: 10px;
+                    color: #5a5a5a;
+                }
+            }
+        }
+    }
+
 }
 
 .red-border{

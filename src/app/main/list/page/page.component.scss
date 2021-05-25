@@ -1,7 +1,7 @@
 @import "../../../../assets/styles/colors.scss";
 
 .page_wrapper{
-    width: 80%;
+    width: 90%;
     display: flex;
     justify-content: space-between;
     margin: auto;
@@ -10,7 +10,7 @@
 }
 
 aside{
-    width: 15%;
+    width: 19%;
     padding-top: 38px;
     p{
         margin: 10px;
@@ -29,7 +29,7 @@ aside{
 }
 
 section{
-    width: 83%;
+    width: 80%;
     .header_block{
         border-bottom: 1px solid $darckBlue;
         padding: 5px 1px;

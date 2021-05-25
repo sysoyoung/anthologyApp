@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { User, UserService } from '../dashboard/user.service';
 import { PageService } from '../main/list/page/page.service';
+import { SearchService } from '../search.service';
 import { ArticleCreationService } from './article-creation.service';
 
 @Component({
@@ -20,6 +21,11 @@ export class ArticleCreationComponent implements OnInit {
   cArticle: any;
   isCreateForm = false;
 
+  relatedArticleControl = new FormControl();
+  relatedArticleArray: Array<any> = [];
+  proposedArticlesArray: Array<any> = [];
+  showProposedArticles = false;
+
   constructor(
     private fb: FormBuilder,
     private articleCreation: ArticleCreationService,
@@ -27,6 +33,7 @@ export class ArticleCreationComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private titlePage: Title,
+    private searchService: SearchService
     ) {
       this.userService.getUserInfo(this.authService.getUserIdfromStorage()).subscribe( (data: User) => {
         if (!data.status){
@@ -38,6 +45,11 @@ export class ArticleCreationComponent implements OnInit {
   ngOnInit(): void {
     const myUrlTree = this.router.parseUrl(this.router.url);
     const articleChangeId = myUrlTree.root.children[this.PRIMARY_OUTLET].segments[3]?.path;
+
+    this.relatedArticleControl.valueChanges.subscribe( value => {
+      this.searchProposedArticles(value);
+    });
+
 
     if (articleChangeId === undefined){
       this.isCreateForm = true;
@@ -51,12 +63,39 @@ export class ArticleCreationComponent implements OnInit {
       this.isCreateForm = true;
       this.titlePage.setTitle('Змінення статті');
       this.cArticle = this.articleCreation.articleToChange;
-      console.log(this.cArticle);
+      this.relatedArticleArray = this.cArticle?.relatedArticles;
       this.createArticleChangeForm();
       return;
     }
 
     this.router.navigate(['/dashboard/' + this.authService.getUserIdfromStorage()]);
+  }
+
+  addArticleToRelated(art: any): void{
+    for (const related of this.relatedArticleArray){
+      if (related.id === art.id){ return; }
+    }
+    this.relatedArticleArray.push(art);
+  }
+
+  deleteRelatedFromArray(index: number): void{
+    this.relatedArticleArray =  this.relatedArticleArray.filter( (_, i) => i !== index);
+  }
+
+  searchProposedArticles(value: string): void{
+    this.searchService.setSearchValue(value);
+    this.searchService.getAllArticles().subscribe( (responce: Array<object> | any) => {
+      this.proposedArticlesArray = responce.filter( (elem: any) => elem.id !== this.cArticle?.id);
+      this.checkListLength();
+    });
+  }
+
+  checkListLength(): void{
+    if (this.proposedArticlesArray.length === 0){
+      this.showProposedArticles = false;
+      return;
+    }
+    this.showProposedArticles = true;
   }
 
   createArticleChangeForm(): void{
@@ -66,7 +105,6 @@ export class ArticleCreationComponent implements OnInit {
       description: [ this.cArticle.description ],
       sources: this.fb.array([]),
       tags: this.fb.array([]),
-      // related: this.fb.array([ ['rel arr'] ]),
       text: [ this.cArticle.text ]
     });
 
@@ -91,7 +129,6 @@ export class ArticleCreationComponent implements OnInit {
         })
       ]),
       tags: this.fb.array([ ['Приклад: онтологія'] ]),
-      // related: this.fb.array([ ['rel arr'] ]),
       text: [`Онтолоогія — вчення про буття, розділ філософії, у якому з'ясовуються фундаментальні проблеми існування, розвитку сутнісного, найважливішого.`]
     });
   }
@@ -164,6 +201,7 @@ export class ArticleCreationComponent implements OnInit {
   }
 
   submitNewArticle(): void{
+    this.articleFormGroup.value.relatedArticles = this.relatedArticleArray.map( elem => elem.id );
     this.articleCreation.createArticle(this.articleFormGroup.value).subscribe( (responce: any) => {
       if (responce.success){
         this.navigateToDashboard();
@@ -174,6 +212,7 @@ export class ArticleCreationComponent implements OnInit {
   submitChangedArticle(): void{
     this.articleFormGroup.value.id = this.cArticle.id;
     this.articleFormGroup.value.date = this.cArticle.date;
+    this.articleFormGroup.value.relatedArticles = this.relatedArticleArray.map( elem => elem.id );
 
     this.articleCreation.changeArticle(this.articleFormGroup.value).subscribe( (responce: any) => {
       if (responce.success){
