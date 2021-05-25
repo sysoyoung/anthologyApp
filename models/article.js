@@ -45,6 +45,7 @@ class Article{
     }
 
     saveArticle(){
+        let relate = this.relatedArticles.length? `art:relatedTo ${this.relatedArticles.map(a => 'art:article'+a).join(', ')};` : '';
         let query = db.prefix + `
             insert data{
                 art:article${this.id} rdf:type owl:NamedIndividual;
@@ -60,8 +61,8 @@ class Article{
                     art:sources "${this.joinSource(this.sources)}";
                     art:hasAuthor art:user${this.authorId};
                     art:hasText art:text${this.id};
+                    ${relate}
             }`;
-        // relatedArticles
 
         return fetch(db.url, queryHelper.getPostObj(query))
     }
@@ -116,6 +117,12 @@ class Article{
                 art:tags ?tags;
                 art:sources ?sources;
                 art:hasAuthor ?authorId;
+                optional{
+                    art:article${id} art:relatedTo ?relatedArticles.
+                    ?relatedArticles art:title ?relatedTitle;
+                                    art:author ?relatedAuthor;
+                                    art:id ?relatedId;
+                }
         }`;
 
         const url = queryHelper.createQueryUrl(query);
@@ -188,6 +195,20 @@ class Article{
             let newS = sous.split('?*sl*?');
             return { title: newS[0], link: newS[1] }
         })
+    }
+
+    static parceRelatedArticles(metaArr){
+        let unsw = [];
+
+        for(let meta of metaArr){
+            let temp = {
+                id: +meta.relatedId,
+                title: meta.relatedTitle,
+                author: meta.relatedAuthor,
+            }
+            unsw.push(temp);
+        }
+        return unsw;
     }
 }
 

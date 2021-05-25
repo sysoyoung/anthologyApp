@@ -18,11 +18,17 @@ router.get('/:id', (req, res) => {
         if(text){
             Article.getArticle(pageId)
             .then( metaObj => {                
-                const metaData = parcer.parceObj(metaObj);
-                const responcePage = Article.parceMetaData(metaData);
+                const metaData = parcer.parseArray(metaObj);
+                const responcePage = Article.parceMetaData(metaData[0]);
+                responcePage.relatedArticles = Article.parceRelatedArticles(metaData);
+
+                delete responcePage.relatedTitle;
+                delete responcePage.relatedAuthor;
+                delete responcePage.relatedId;
+
                 responcePage.text = text;
                 responcePage.success = true;
-                res.json( responcePage );
+                res.json( responcePage );            
             })
             return;
         }

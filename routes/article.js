@@ -46,7 +46,7 @@ router.post('/create/:authorId', (req, res) => {
     let authorName;
     let newArticle;
     let newPage;
-
+    
     User.getUserById(authorId)
     .then( userObj => {
         authorName = parcer.parceObj(userObj).name;
