@@ -1,7 +1,5 @@
-const pageDb = require('../config/tempDbPages');
-let pages = pageDb.page;
-
 const fetch = require('node-fetch');
+
 const db = require('../config/db');
 const queryHelper = require('../config/query');
 class Page{
@@ -19,8 +17,7 @@ class Page{
                 art:text${+id} ?a ?b
             }`;
 
-        fetch(db.url, queryHelper.getPostObj(query))
-        return true;
+        return fetch(db.url, queryHelper.getPostObj(query))
     }
 
     static getPage(id){
@@ -42,8 +39,7 @@ class Page{
                     art:id ${this.id};
                     art:text "${this.text}";
             }`;
-        fetch(db.url, queryHelper.getPostObj(query));
-        return true;
+        return fetch(db.url, queryHelper.getPostObj(query));
     }
 }
 

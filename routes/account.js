@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/db');
+const parcer = require('../config/parse');
 
 const user = require('../models/user');
 const User = user.User;
 
 const articles = require('../models/article');
 const Article = articles.Article;
-
-const parcer = require('../config/parse');
 
 router.post('/reg', (req, res) => {
     const newUser = new User(
@@ -21,14 +19,14 @@ router.post('/reg', (req, res) => {
     );
 
     User.checkExistance(req.body.email)
-        .then( data => {
-            if(data.boolean){
-                res.json({ success: false, message: 'Email exist'});
-                return;
-            }
-            User.hashPassword(newUser);
-            res.json({ success: true, message: 'User added'});
-        })
+    .then( data => {
+        if(data.boolean){
+            res.json({ success: false, message: 'Email exist'});
+            return;
+        }
+        User.hashPassword(newUser);
+        res.json({ success: true, message: 'User added'});
+    })
 });
 
 router.post('/auth', (req, res) => {
@@ -36,33 +34,33 @@ router.post('/auth', (req, res) => {
     const email = req.body.email;
 
     User.getUserByEmail(email)
-        .then( data => {
-            let user = parcer.parceObj(data);
-            if(user){
-                User.comparePass(password, user.password, (err, isMatch) => {
-                    if(err) throw err;
-            
-                    if(isMatch) {
-                        const token = jwt.sign(user, config.secret, { expiresIn: "1d" });
-            
-                        res.json({
-                            success: true,
-                            token: 'JWT ' + token,
-                            user: {
-                                id: user.id,
-                                name: user.name,
-                                email: email,
-                            }
-                        })
-                    } else {
-                        return res.json({success: false, message: "wrong password"});
-                    }
-                });
+    .then( data => {
+        let user = parcer.parceObj(data);
+        if(user){
+            User.comparePass(password, user.password, (err, isMatch) => {
+                if(err) throw err;
+        
+                if(isMatch) {
+                    const token = jwt.sign(user, config.secret, { expiresIn: "1d" });
+        
+                    res.json({
+                        success: true,
+                        token: 'JWT ' + token,
+                        user: {
+                            id: user.id,
+                            name: user.name,
+                            email: email,
+                        }
+                    })
+                } else {
+                    return res.json({success: false, message: "wrong password"});
+                }
+            });
 
-                return;
-            }
-            return res.json({success: false, message: 'email not found'});
-        })
+            return;
+        }
+        return res.json({success: false, message: 'email not found'});
+    })
 });
 
 router.get('/dashboard/:id', (req, res) => {
@@ -77,17 +75,24 @@ router.get('/dashboard/:id', (req, res) => {
     }
 
     User.getUserById(userId)
-        .then( data => {
-            let user = parcer.parceObj(data);
-            if(user){
-                user.status = true;
-                user.articles = Article.getUserArticles(userId);
+    .then( usesrObj => {
+        let user = parcer.parceObj(usesrObj);
+        if(user){
+            user.status = true;
+            Article.getUserArticles(userId)
+            .then( data => {
+                let articlesArray = parcer.parseArray(data);
+                for(let i = 0; i < articlesArray.length; i++){
+                    articlesArray[i] = Article.parceMetaData(articlesArray[i]);
+                }
+                user.articles = articlesArray;
                 res.json(user);
-                return;
-            }
-            res.json({ status: false, message: 'user not found'});
+            })
             return;
-        })
+        }
+        res.json({ status: false, message: 'user not found'});
+        return;
+    })
 });
 
 module.exports = router;

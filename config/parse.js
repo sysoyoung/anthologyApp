@@ -12,13 +12,21 @@ function parceObj(resp){
 }
 
 function parseArray(resp){
-    // let vars = resp.head.vars;
-    // let results = resp.results.bindings;
+    let vars = resp.head.vars;
+    let results = resp.results.bindings;
 
-    // if(results.length == 0) return false;
+    if(results.length == 0) return false;
 
-    // if(results.length == 1)
-    //     return parceObj(vars, results[0]);
+    let unsw = [];
+    for(let j = 0; j < results.length; j++){
+        let temp = results[j];
+        let tempObj = {};
+        for(let i = 0; i < vars.length; i++)
+            tempObj[vars[i]] = temp[vars[i]]?.value;
+        unsw.push(tempObj);
+    }
+    
+    return unsw;
 }
 
 module.exports.parseArray = parseArray;

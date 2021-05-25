@@ -1,6 +1,3 @@
-const articlesDb = require('../config/tempDpListOfPages');
-const articles = articlesDb.tempArrayOfArticles;
-
 const fetch = require('node-fetch');
 
 const db = require('../config/db');
@@ -38,7 +35,6 @@ class Article{
         let url = queryHelper.createQueryUrl(query);
         return fetch(url).then( res => res.json());
     }
-
     static setId(id){
         let query = db.prefix + `delete where{ art:articlesIDcreator art:superid ?id }`;
         fetch(db.url, queryHelper.getPostObj(query))
@@ -67,45 +63,23 @@ class Article{
             }`;
         // relatedArticles
 
-        fetch(db.url, queryHelper.getPostObj(query))
-        return true;
-    }
-
-    joinTags(tags){ return tags.join('!*&*&*!'); }
-    parceTags(tags){ return tags.split('!*&*&*!'); }
-
-    joinSource(sources){ return sources.map( sous => [sous.title, sous.link].join('?*sl*?') ).join('!*&*&*!'); }
-    parceSource(sources){
-        return sources.split('!*&*&*!').map( sous => {
-            let newS = sous.split('?*sl*?');
-            return { title: newS[0], link: newS[1] }
-        })
-    }
-
-    getArticleAsObject(){
-        return {
-            id: this.id,
-            title: this.title,
-            lang: this.lang,
-            description: this.description,
-            author: this.author,
-            authorId: this.authorId,
-            date: this.date,
-            status: this.status,
-            sources: this.sources,
-            tags: this.tags,
-            relatedArticles: this.relatedArticles,
-        };
+        return fetch(db.url, queryHelper.getPostObj(query))
     }
 
     static changeStatus(id, stat){
-        let answer = articles.find( art => {
-            if(art.id == id){
-                art.status = stat;
-                return true;
-            }
-        });
-        return !!answer;
+        let query = db.prefix + `
+            delete where{
+                art:article${id} art:status ?a
+            }`;
+        
+        fetch(db.url, queryHelper.getPostObj(query))
+        .then( _ => {
+            let query = db.prefix + `
+                insert data{
+                    art:article${id} art:status "${stat}"
+                }`;
+            fetch(db.url, queryHelper.getPostObj(query));
+        })
     }
 
     static deleteArticle(id){
@@ -114,8 +88,7 @@ class Article{
                 art:article${+id} ?a ?b
             }`;
 
-        fetch(db.url, queryHelper.getPostObj(query))
-        return true;
+        return fetch(db.url, queryHelper.getPostObj(query));
     }
 
     static isSameArticleAuthor(title, authorId){
@@ -129,24 +102,94 @@ class Article{
     }
 
     static getArticle(id){
-        return articles.find( item => item.id === id);
+        let query = db.prefix + `
+        select * where{
+            art:article${id} rdf:type owl:NamedIndividual;
+                rdf:type art:Article;
+                art:id ?id;
+                art:title ?title;
+                art:lang ?lang;
+                art:description ?description;
+                art:author ?author;
+                art:date ?date;
+                art:status ?status;
+                art:tags ?tags;
+                art:sources ?sources;
+                art:hasAuthor ?authorId;
+        }`;
+
+        const url = queryHelper.createQueryUrl(query);
+        
+        return fetch(url).then(res => res.json());
     }
 
     static getUserArticles(userId){
-        return articles.filter( item => item.authorId === userId);
+        let query = db.prefix + `
+        select ?id ?title ?lang ?description ?author ?date ?status ?tags ?sources ?authorId where{
+            ?article rdf:type owl:NamedIndividual;
+                rdf:type art:Article;
+                art:id ?id;
+                art:title ?title;
+                art:lang ?lang;
+                art:description ?description;
+                art:author ?author;
+                art:date ?date;
+                art:status ?status;
+                art:tags ?tags;
+                art:sources ?sources;
+                art:hasAuthor art:user${userId};
+                art:hasAuthor ?authorId;
+        }`;
+
+        const url = queryHelper.createQueryUrl(query);
+        
+        return fetch(url).then(res => res.json());
     }
 
     static searchByTitle(title){
-        return articles.filter( art => art.title.toLowerCase().includes(title) && art.status === 'posted')
+        let query = db.prefix + `
+        select ?id ?title ?lang ?description ?author ?date ?status ?tags ?sources ?authorId where{
+            ?article rdf:type owl:NamedIndividual;
+                rdf:type art:Article;
+                art:id ?id;
+                art:title ?title;
+                art:lang ?lang;
+                art:description ?description;
+                art:author ?author;
+                art:date ?date;
+                art:status "posted";
+                art:tags ?tags;
+                art:sources ?sources;
+                art:hasAuthor ?authorId;
+                filter( contains( lcase(?title), "${title}") )
+        }`;
+
+        const url = queryHelper.createQueryUrl(query);
+        
+        return fetch(url).then(res => res.json());
     }
 
-    getId(){
-        return this.id;
+    static parceMetaData(meta){
+        meta.id = +meta.id;
+        meta.date = +meta.date;
+        meta.tags = Article.parceTags(meta.tags);
+        meta.sources = Article.parceSource(meta.sources);
+        meta.authorId = meta.authorId.split('article_collection.owl#user')[1]
+
+        return meta;
+    }
+
+    joinTags(tags){ return tags.join('!*&*&*!'); }
+    static parceTags(tags){ return tags.split('!*&*&*!'); }
+
+    joinSource(sources){ return sources.map( sous => [sous.title, sous.link].join('?*sl*?') ).join('!*&*&*!'); }
+    static parceSource(sources){
+        return sources.split('!*&*&*!').map( sous => {
+            let newS = sous.split('?*sl*?');
+            return { title: newS[0], link: newS[1] }
+        })
     }
 }
-
-
-
 
 module.exports = {
     Article: Article

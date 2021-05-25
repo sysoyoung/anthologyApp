@@ -49,7 +49,7 @@ class User{
                             art:password "${user.password}";
             }
         `;
-        fetch(db.url, queryHelper.getPostObj(query));
+        return fetch(db.url, queryHelper.getPostObj(query));
     }
 
     static getUserByEmail(email){
@@ -63,8 +63,7 @@ class User{
         `;
 
         let url = queryHelper.createQueryUrl(query);
-        return fetch(url)
-                .then(res => res.json());
+        return fetch(url).then(res => res.json());
     }
 
     static getUserById(id){
@@ -76,8 +75,7 @@ class User{
         `;
 
         let url = queryHelper.createQueryUrl(query);
-        return fetch(url)
-                    .then(res => res.json());
+        return fetch(url).then(res => res.json());
     }
 
     static comparePass(passFromUser, userPass, callback){
@@ -90,8 +88,7 @@ class User{
     static checkExistance(email){
         let query = db.prefix + `ask{ ?user art:email "${email}" }`;
         let queryUrl = queryHelper.createQueryUrl(query);
-        return fetch(queryUrl)
-            .then( res => res.json())
+        return fetch(queryUrl).then( res => res.json())
     }
 
     static findOne({id}, callback){
