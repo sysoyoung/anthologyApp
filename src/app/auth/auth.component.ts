@@ -43,8 +43,8 @@ export class AuthComponent implements OnInit {
         password: this.passwordControl.value
       }).subscribe( (res: any) => {
         if (res.success){
-          this.router.navigate(['/dashboard/' + res.user.id]);
           this.authService.storeUser( res.token, res.user);
+          this.router.navigate(['/dashboard/' + res.user.id]);
           return;
         }
         if (res.message === 'wrong password'){
