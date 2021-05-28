@@ -3,6 +3,7 @@
         <input type="text" placeholder="Пошук" [formControl]="searchControl" (keydown.Enter)="search()">
         <button (click)="search()"><fa-icon [icon]="searchIcon"></fa-icon></button>
     </div>
+    <h2 style="margin-left:10px"><span>Результати:</span> {{query}} </h2>
     <div class="list_block">
         {{nothing}}
         <app-list-item *ngFor="let article of arrayOfArticles" [article]="article"></app-list-item>

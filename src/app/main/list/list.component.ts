@@ -18,6 +18,8 @@ export class ListComponent implements OnInit {
   public nothing = '';
   public arrayOfArticles: Array<object> = [];
 
+  query = '';
+
   constructor(
     private searchService: SearchService,
     private titlePage: Title,
@@ -27,6 +29,7 @@ export class ListComponent implements OnInit {
     this.searchControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.makeSearch();
     this.titlePage.setTitle('Результати пошуку');
+    this.query = this.searchService.getSearchValue();
   }
 
   makeSearch(): void{
@@ -39,7 +42,7 @@ export class ListComponent implements OnInit {
       if (this.arrayOfArticles.length === 0 && this.nothing === ''){
         this.nothing = 'Сервер не отвечает';
       }
-    }, 3000);
+    }, 5000);
   }
 
   search(): void{

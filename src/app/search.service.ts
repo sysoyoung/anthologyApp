@@ -19,6 +19,10 @@ export class SearchService {
     this.searchValue = value;
   }
 
+  public getSearchValue(): string{
+    return this.searchValue;
+  }
+
   public getAllArticles(): Observable<object>{
     if (this.searchValue.length === 0){
       const myUrl = this.router.url;

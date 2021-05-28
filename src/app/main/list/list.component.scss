@@ -9,7 +9,6 @@
 .search_block{
     margin-top: 40px;
     padding-bottom: 30px;
-    border-bottom: 1px solid $darckBlue;
 
     input, button{
         height: 35px;
@@ -39,5 +38,17 @@
         &:active{
             background-color: $lightBlueActive;
         }
+    }
+}
+
+.list_block{
+    border-top: 1px solid $darckBlue;
+}
+
+h2{
+    color: $green;
+    margin-bottom: 5px;
+    span{
+        color: $darckBlue
     }
 }

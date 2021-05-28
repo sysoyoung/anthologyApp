@@ -1,7 +1,7 @@
 <div class="for-click" (click)="showProposedArticles = false">
     <div class="page_wrapper" *ngIf="isCreateForm">
 
-        <h1>Створення статті</h1>
+        <h1>{{cArticle? 'Змінення': 'Створення'}} статті</h1>
         
         <form [formGroup]="articleFormGroup">
             <label for="title">Заголовок статті*</label>
@@ -56,7 +56,6 @@
                         </li>
                     </ul>
                 </div>
-                <!-- (blur)="checkBlur($event)" -->
                 <span (click)="checkListLength(); $event.stopPropagation()">
                     <input type="text" name="related_article" 
                     id="related_article" placeholder="Назва статті" 

@@ -59,7 +59,6 @@ export class PageComponent implements OnInit {
 
   decomposeText(): void{
     let text: any = this.article?.text;
-
     text = text?.split('<h2>');
     this.text = text.map( (a: any) => {
       const b: any = a.split('</h2>');
