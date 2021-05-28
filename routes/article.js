@@ -14,7 +14,7 @@ const Page = page.Page;
 router.delete('/:id', (req, res) => {
     let id = req.params.id;
     Article.deleteArticle(id);
-    Page.deletePage(id);
+    Page.deletePage(+id);
     res.json({success: true});
 });
 //
@@ -101,7 +101,7 @@ router.put('/change/:authorId', (req, res) => {
         );
         newPage = new Page( rqB.id, req.body.text );
 
-        return Page.deletePage(rqB.id)
+        return Page.deletePage(+rqB.id)
     })
     .then( _ => newPage.savePage() )
     .then( _ => Article.deleteArticle(rqB.id) )

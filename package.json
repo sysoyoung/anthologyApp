@@ -13,6 +13,7 @@
     "cors": "*",
     "express": "*",
     "jsonwebtoken": "*",
+    "mongoose": "^5.12.12",
     "node-fetch": "^2.6.1",
     "passport": "*",
     "passport-jwt": "*"

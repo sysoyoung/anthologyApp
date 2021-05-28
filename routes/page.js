@@ -12,9 +12,9 @@ router.get('/:id', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     let pageId = req.params.id;
 
-    Page.getPage(pageId)
+    Page.getPage(+pageId)
     .then( textObj => {
-        const text = parcer.parceObj(textObj).text;
+        const text = textObj?.text || null;
         if(text){
             Article.getArticle(pageId)
             .then( metaObj => {                

@@ -60,7 +60,6 @@ class Article{
                     art:tags "${this.joinTags(this.tags)}";
                     art:sources "${this.joinSource(this.sources)}";
                     art:hasAuthor art:user${this.authorId};
-                    art:hasText art:text${this.id};
                     ${relate}
             }`;
 
